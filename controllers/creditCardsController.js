@@ -37,8 +37,14 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
             $scope.entity = $scope.JsonCard;            
             $scope.entity.index = JsonCard;
-            var codeSecure = $scope.JsonCard.secure_code;
+            var codeSecure = $scope.JsonCard.secure_code;            
             //$scope.entity.secure_code =  encrypt(codeSecure);
+                   
+            //Formato fecha de expiración de las tarjetas
+            var fechaExpiracion  = $scope.JsonCard.expiration;
+			var date = new Date(fechaExpiracion);
+            var yearExp = date.getFullYear();
+            var monthExp = date.getMonth()+1;
                             
             // Generar request al servicio
             var datos = $scope.entity;
@@ -49,6 +55,8 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
                 datos.selected = "N";
                 datos.status = "A";
                 datos.id_user = arrayUrl.ID;
+                datos.month_expiration = monthExp;
+                datos.year_expiration = yearExp;
             }
 
             var url = service_creditCards  + '/' + $scope.entity; 
@@ -98,12 +106,15 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             }, function (error) {
                 toastr.error("Ocurrió un error al intentar quitar el registro");
                 console.log(error);
-            });          
+            }); 
+             
      };    
        
         $scope.clear = function(data) {
             $scope.JsonDataUser = {};
             // Filter through the selected items if needed
          }; 
+    
+
 	}
 );

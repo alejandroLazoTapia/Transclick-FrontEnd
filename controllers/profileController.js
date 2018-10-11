@@ -17,6 +17,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             console.log(error);
         });        
     }
+    
     $scope.getData();
+
+
 	}
 );

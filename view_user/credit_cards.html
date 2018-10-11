@@ -15,6 +15,7 @@
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <!-- Plugin CSS -->
@@ -249,23 +250,20 @@
                                     <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                   </div>
             
-                                  <div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback">
-                                    <input type="number" class="form-control has-feedback-left" id="single_cal2" placeholder="Mes Vencimiento" ng-model="JsonCard.month_expiration" min="0" max="12" required>
+                                  <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="month" class="form-control has-feedback-left" id="single_cal2" placeholder="Mes Vencimiento" ng-model="JsonCard.expiration" min="0" max="12" required>
                                     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 </div>
     
-                                <div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback">
-                                  <input type="number" class="form-control has-feedback-left" id="single_cal2" placeholder="Año Vencimiento" aria-describedby="inputSuccess2Status2" ng-model="JsonCard.year_expiration">
-                                  <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                              </div>
+
 
                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                              <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nombre" ng-model="JsonCard.name">
+                              <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nombre" ng-model="JsonCard.name" onkeyup="mayusc(this);">
                               <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                             </div>
       
                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                              <input type="text" class="form-control" id="inputSuccess3" placeholder="Apellido" ng-model="JsonCard.last_name">
+                              <input type="text" class="form-control" id="inputSuccess3" placeholder="Apellido" ng-model="JsonCard.last_name" onkeyup="mayusc(this);">
                               <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                             </div>                                
 
@@ -284,9 +282,13 @@
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                   <button type="button" class="btn btn-primary" ng-click="save($JsonDataUser)">Guardar</button>
                 </div>
+
               </div>
             </div>
           </div>
+
+
+
         </div>
         <!-- /page content -->
 

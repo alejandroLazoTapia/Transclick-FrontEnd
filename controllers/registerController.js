@@ -2,6 +2,7 @@
    $(document).ready(function () {
     $.cookie("session", false);
     $.removeCookie("usuario");
+
 });
 
 //Valida los campos ingresados en el formulario  
@@ -10,16 +11,19 @@ var obj =[];
 obj.status = true;
 obj.message = "";
 
+var fullname = $('#name').val();
+var nameArray = fullname.split(' ');
+
 if ($('#typeDocument').val() == ''){
   obj.status = false;
   obj.message = "Debe seleccionar tipo documento.";
 }else if ($('#numberDocument').val() == ''){
   obj.status = false;
   obj.message = "Debe ingresar número documento.";
-}else if ($('#name').val() == ''){
+}else if (nameArray[0] == '' || nameArray[0] == undefined){
   obj.status = false;
   obj.message = "Debe ingresar nombre.";
-}else if($('#lastname').val()  == ''){
+}else if(nameArray[1] == '' || nameArray[1] == undefined){
   obj.status = false;
   obj.message = "Debe ingresar apellido.";
 }else if($('#email').val()  == ''){
@@ -44,14 +48,6 @@ if ($('#typeDocument').val() == ''){
 return obj;
 } 
 
-function IsEmail(email) {
-var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-if(!regex.test(email)) {
-  return false;
-}else{
-  return true;
-}
-}
 
 var app = angular.module('MyApp', []);
 app.controller('Register', function ($scope, $http, $window) {
@@ -68,13 +64,16 @@ $scope.ButtonClick = function () {
   var fechaformat = fecha.format("yyyy-mm-dd'T'HH:MM:ss");
   // Encriptar contraseña antes de almacenarla
   var passencrip = window.btoa($scope.password);
+
+  var fullname = $scope.name;
+  var nameArray = fullname.split(' ');
   
   // Generar request al servicio
-  var datos = { "id_perfil": 1, "id_doc_type": $scope.typeDocument,  "num_document": $scope.numberDocument, "name": $scope.name, "last_name": $scope.name, "email": $scope.email, "sex": $scope.sex, "birth_date": fechaformat, "password": passencrip };
+  var datos = { "id_perfil": 1, "id_doc_type": $scope.typeDocument,  "num_document": $scope.numberDocument, "name": nameArray[0], "last_name": nameArray[1], "email": $scope.email, "sex": $scope.sex, "birth_date": fechaformat, "password": passencrip };
   var request = $.post(service_user , datos);
 
-  console.log(service_user);
-  console.log(datos);
+  //console.log(service_user);
+  //console.log(datos);
   console.log(request);
   
   // Si el request est� OK

@@ -16,27 +16,31 @@ function validateInput(){
 
 function getUrlVars()
     {
-        var vars = [], hash;
-        var url = window.location.href.slice(window.location.href.indexOf('') + 1).split('&');
-        var urlEncrypt = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        try {
+            var vars = [], hash;
+            var url = window.location.href.slice(window.location.href.indexOf('') + 1).split('&');
+            var urlEncrypt = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
 
-        if (urlEncrypt == undefined || urlEncrypt == '' || url == undefined || url == '') {
-            window.location.href = getAbsolutePath() + "page_404.html";
-            return;
-        }else
-        {                    
-            console.log("----------------------");        
-            console.log("QueryString: " + urlEncrypt);
-            var dec = window.atob(urlEncrypt);
-            //console.log(dec);
-            //console.log("----------------------");
-            var hashes = dec.split('&');
-            for(var i = 0; i < hashes.length; i++)
-            {
-                hash = hashes[i].split('=');
-                //vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
+            if (urlEncrypt == undefined || urlEncrypt == '' || url == undefined || url == '') {
+                window.location.href = getAbsolutePath() + "/page_404.html";
+                return;
+            }else
+            {                    
+                //console.log("----------------------");        
+                //console.log("QueryString: " + urlEncrypt);
+                var dec = window.atob(urlEncrypt);
+                //console.log(dec);
+                //console.log("----------------------");
+                var hashes = dec.split('&');
+                for(var i = 0; i < hashes.length; i++)
+                {
+                    hash = hashes[i].split('=');
+                    //vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
             }
+        }catch(err) {
+            window.location.href = getAbsolutePath() + "/page_404.html";
         }
         return vars;        
     }
@@ -113,3 +117,12 @@ function decrypt(string)
 
     return dec;
 };
+
+function IsEmail(email) {
+    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(!regex.test(email)) {
+      return false;
+    }else{
+      return true;
+    }
+    }

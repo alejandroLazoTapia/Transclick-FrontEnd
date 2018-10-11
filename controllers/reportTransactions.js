@@ -25,6 +25,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     }
     $scope.getData();
     
+
     var xhReq = new XMLHttpRequest();
           xhReq.open("GET", service_consumption+"?idUserGraphic="+arrayUrl.ID, false);
           xhReq.send(null);
@@ -45,8 +46,13 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
              yAxis:{title:{text:'Pesos $'}},
              tooltip:{valueSuffix:'$', pointFormat: '{series.total}: {point.y} (<b>{point.Pesos:..1f}$</b>)'},
              legend:{layout:'vertical',align:'right',verticalAlign:'middle',borderWidth:0},
-             series:[{type: 'column',name: 'Consumo',data: dat},],
+             series:[{type: 'column',name: 'Consumo',data: dat}, 
+    
+           ],
              plotOptions:{line:{dataLabels:{enabled:true}}}
          });
      });
+
+
 });
+

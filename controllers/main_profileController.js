@@ -14,7 +14,8 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
         });        
-    } 
+    }
+    
     $scope.getData();
     $scope.entity.disabled == true;
 

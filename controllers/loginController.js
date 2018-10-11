@@ -56,6 +56,7 @@ $scope.ButtonClick = function () {
       toastr.info("Verifique su conexión [0].");                    
     }          
   });
+
 }else{
   toastr.info(validate.message);                    
 } 
