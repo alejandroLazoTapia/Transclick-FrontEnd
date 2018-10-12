@@ -18,12 +18,12 @@ function SmartWizard(target, options) {
     this.steps        = $(target).children("ul").children("li").children("a"); // Get all anchors
     this.contentWidth = 0;
     this.msgBox = $('<div class="msgBox"><div class="content"></div><a href="#" class="close">X</a></div>');
-    this.elmStepContainer = $('<div></div>').addClass("stepContainer");
+    this.elmStepContainer = $('<div></div>').addClass("step");
     this.loader = $('<div>Loading</div>').addClass("loader");
     this.buttons = {
-        next : $('<a>'+options.labelNext+'</a>').attr("href","#").addClass("buttonNext"),
-        previous : $('<a>'+options.labelPrevious+'</a>').attr("href","#").addClass("buttonPrevious"),
-        finish  : $('<a>'+options.labelFinish+'</a>').attr("href","#").addClass("buttonFinish")
+        finish  : $('<button ng-click="send($JsonForm)">'+options.labelFinish+'</a>').attr("href","#").addClass("buttonFinish"),
+        next : $('<button>'+options.labelNext+'</button>').attr("href","#").addClass("buttonNext"),
+        previous : $('<button>'+options.labelPrevious+'</button>').attr("href","#").addClass("buttonPrevious")
     };
 
     /*
@@ -387,8 +387,8 @@ function SmartWizard(target, options) {
         });
 
         // These values (5 and 20) are experimentally chosen.
-        stepContainer.height(height + 5);
-        this.elmStepContainer.height(height + 20);
+        stepContainer.height(height);
+        this.elmStepContainer.height(height);
     }
 
     _init(this);
@@ -437,9 +437,9 @@ $.fn.smartWizard.defaults = {
     enableFinishButton: false, // make finish button enabled always
 	hideButtonsOnDisabled: false, // when the previous/next/finish buttons are disabled, hide them instead?
     errorSteps:[],    // Array Steps with errors
-    labelNext:'Next',
-    labelPrevious:'Previous',
-    labelFinish:'Finish',
+    labelNext:'Siguiente',
+    labelPrevious:'Atras',
+    labelFinish:'Envíar',
     noForwardJumping: false,
     onLeaveStep: null, // triggers when leaving a step
     onShowStep: null,  // triggers when showing a step

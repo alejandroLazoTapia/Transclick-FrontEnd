@@ -2,8 +2,18 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     $scope.entity = {}
 
     var arrayUrl = getUrlVars();
-
+    var url_user = service_user +'/'+ arrayUrl.ID;
     var url = service_consumption + '?idUser=' + arrayUrl.ID; 
+    var url_graphic= service_consumption + '?idUserGraphic=' + arrayUrl.ID; 
+
+    //obtener datos de usuario
+    var userReq = new XMLHttpRequest();
+    userReq.open("GET", url_user, false);
+    userReq.send(null);
+    var userJson = JSON.parse(userReq.responseText); //variable con datos de usuario
+
+
+    
 
     // Obtener transacciones mediante método GET
     $scope.getData = function() 
@@ -26,33 +36,73 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     $scope.getData();
     
 
-    var xhReq = new XMLHttpRequest();
+          var xhReq = new XMLHttpRequest();
           xhReq.open("GET", service_consumption+"?idUserGraphic="+arrayUrl.ID, false);
           xhReq.send(null);
           var da = JSON.parse(xhReq.responseText);
           console.log(da);
           var dat = [];
-      
+          var mes = [];
+          var cant_trx=[];
+
           for (i = 0; i < da.length; i++) {
-            var serie = new Array(da[i].mes, da[i].Total);
+            var me= new Array(da[i].mes);
+            mes.push(me);
+
+            var ca_tx=new Array(da[i].cant_trx);
+            cant_trx.push(ca_tx)
+
+            var serie = new Array(da[i].mes, da[i].Total, da[i].cant_trx);
             console.log(serie);
             dat.push(serie);
             console.log(dat);
           }
-        $(function($){
-         $('#grafico').highcharts({
-             title:{text:'Reporte Consumos'},
-             xAxis:{title:{text:'Mes'}},
-             yAxis:{title:{text:'Pesos $'}},
-             tooltip:{valueSuffix:'$', pointFormat: '{series.total}: {point.y} (<b>{point.Pesos:..1f}$</b>)'},
-             legend:{layout:'vertical',align:'right',verticalAlign:'middle',borderWidth:0},
-             series:[{type: 'column',name: 'Consumo',data: dat}, 
-    
-           ],
-             plotOptions:{line:{dataLabels:{enabled:true}}}
-         });
-     });
+        
+          
+             
 
+     $(function($){
+            $('#grafico').highcharts({
+            title: {
+                text: 'Resumen de Transacciones'
+            },
+            subtitle: {
+                text: 'Total / Mes'
+            },
+            xAxis: {
+                min: 0,
+                title: {
+                    text: 'Mes'
+                },
+                categories:mes,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Consumos ($)'
+                }
+            },
 
+            tooltip: {
+                headerFormat: '<span style="font-size:12px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">'+userJson.name+' '+userJson.last_name+': </td></tr>' +
+                    '<td style="padding:0"><b>Total: ${point.y:.0f}</b></td></tr>',
+
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{type: 'column',
+                name: userJson.name+' '+userJson.last_name,
+                data: dat
+            }]
+        });
+    });
 });
-

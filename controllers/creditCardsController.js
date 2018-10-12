@@ -1,8 +1,7 @@
-angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window) {
+angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $window) {
     $scope.JsonData = {}
 
     var arrayUrl = getUrlVars();
-
     var url = service_creditCards  + '?idUser=' + arrayUrl.ID; 
 
     // Obtener tarjetas mediante método GET
@@ -16,6 +15,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
             }else{
                 $scope.JsonData = response.data;
+                $scope.clear();
                 //console.log("Tarjetas registradas: " + response.data.length);    
                 //Recorre los registros del JSON y genera HTML credit cards
             }
@@ -48,13 +48,22 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
                             
             // Generar request al servicio
             var datos = $scope.entity;
-           
+
+
             //Valido si el ID es null para iniciar y crear
             if (datos.id == undefined){
+                //Si es la primera tarjeta registrada queda predeterminada 
+                var num = $scope.JsonData.length;
+                console.log("NUMERO TARJETAS: " + num);
+                if (num > 0){
+                    datos.selected = "N";
+                }else{
+                    datos.selected = "Y";
+                }
+
                 datos.id= 0;
-                datos.selected = "N";
                 datos.status = "A";
-                datos.id_user = arrayUrl.ID;
+                datos.id_user = Number(arrayUrl.ID);
                 datos.month_expiration = monthExp;
                 datos.year_expiration = yearExp;
             }
@@ -112,6 +121,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
        
         $scope.clear = function(data) {
             $scope.JsonDataUser = {};
+            $scope.JsonCard = {};
             // Filter through the selected items if needed
          }; 
     

@@ -14,3 +14,7 @@ var service_documentType =  "https://webapitransclick.azurewebsites.net/api/Docu
 var service_creditCards =  "https://webapitransclick.azurewebsites.net/api/Creditcards";
 // Consumption Service
 var service_consumption =  "https://webapitransclick.azurewebsites.net/api/Consumption";
+// Claims Service
+var service_claims =  "https://webapitransclick.azurewebsites.net/api/Claims";
+var service_claimsReasons =  "https://webapitransclick.azurewebsites.net/api/ClaimReasons";
+var service_claimStatus =  "https://webapitransclick.azurewebsites.net/api/ClaimStatus";
