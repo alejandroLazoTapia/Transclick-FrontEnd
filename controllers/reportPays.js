@@ -3,8 +3,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
     var arrayUrl = getUrlVars();
     var url_user = service_user +'/'+ arrayUrl.ID;
-    var url_table= service_consumption + '?idUser=' + arrayUrl.ID; 
-    var url_graphic= service_consumption + '?idUserGraphic=' + arrayUrl.ID; 
+    var url_graphic = service_PaymentDocument + '?idUserGraphic=' + arrayUrl.ID; 
 
     //obtener datos de usuario
     var userReq = new XMLHttpRequest();
@@ -13,12 +12,10 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     var userJson = JSON.parse(userReq.responseText); //variable con datos de usuario
 
 
-    
-
-    // Obtener transacciones mediante método GET
+    // Obtener transacciones mediante método GET para tabla
     $scope.getData = function() 
     {
-        $http.get(url_table)
+        $http.get(url_graphic)
         .then(function(response){
             if(response.status == 204){
                 toastr.info("No posee transacciones registradas");
@@ -43,16 +40,12 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
           console.log(da);
           var dat = [];
           var mesAno = [];
-          var cant_trx=[];
 
           for (i = 0; i < da.length; i++) {
-            var me= new Array(da[i].ano+" - "+da[i].mes);
+            var me= new Array(da[i].ano+' - '+da[i].mes);
             mesAno.push(me);
 
-            var ca_tx=new Array(da[i].cant_trx);
-            cant_trx.push(ca_tx)
-
-            var serie = new Array(da[i].mes+'<br> CANTIDAD TRX: '+da[i].cant_trx, da[i].Total);
+            var serie = new Array(da[i].mes+'<br>ESTADO BOLETA: '+da[i].estado_boleta, da[i].total_mes);
             console.log(serie);
             dat.push(serie);
             console.log(dat);
@@ -64,10 +57,10 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
      $(function($){
             $('#grafico').highcharts({
             title: {
-                text: 'Resumen de Transacciones'
+                text: 'Resumen de Pagos'
             },
             subtitle: {
-                text: 'Total / Mes'
+                text: 'Total / Boleta'
             },
             xAxis: {
                 min: 0,

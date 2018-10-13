@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Reporte De Transacciones | </title>
+    <title>Reporte De Pagos | </title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -222,30 +222,41 @@
                                                        
                           <tr class="headings">                                                            
                             <th class="column-title">FECHA</th>
-                            <th class="column-title">HORA</th>
-                            <th class="column-title">MONTO</th>
-                            <th class="column-title">BUS</th>
+                            <th class="column-title">CONSUMOS NETO</th>
+                            <th class="column-title">DESCUENTO</th>
+                            <th class="column-title">IVA</th>
+                            <th class="column-title">TOTAL MES</th>
+                            <th class="column-title">ESTADO BOLETA</th>
                           </tr>
                         </thead>
                         
                         <tbody>
                           <tr class="even pointer" ng-repeat="data in JsonData">
-                              <td>
-                                  <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-                                  <span ng-hide="data.editable">{{data.ano}}-{{data.mes}}-{{data.dia}}</span>
-                              </td>
                             <td>
                                 <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-                                <span ng-hide="data.editable">{{data.hora}}:{{data.minuto}}:{{data.segundo}}</span>
+                                <span ng-hide="data.editable">{{data.ano}} - {{data.mes}}</span>
                             </td>
                             <td>
+                              <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.bus" required/>
+                              <span ng-hide="data.editable">{{data.neto}}</span>
+                            </td>
+                            <td>
+                              <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
+                              <span ng-hide="data.editable">{{data.descuento}}</span>
+                          </td>
+                          <td>
+                            <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
+                            <span ng-hide="data.editable">{{data.iva}}</span>
+                        </td>
+                            <td>
                               <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.rate_value" required/>
-                              <span ng-hide="data.editable">$ {{data.valor}}</span>
+                              <span ng-hide="data.editable">{{data.total_mes}}</span>
                             </td>
                               <td>
                                 <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.bus" required/>
-                                <span ng-hide="data.editable">{{data.bus}}</span>
+                                <span ng-hide="data.editable">{{data.estado_boleta}}</span>
                               </td>
+                        
                           </tr>                          
                         </tbody>
                       </table>              
@@ -297,7 +308,7 @@
       <script src="../build/js/utilJS.js"></script>
       <script src="../vendors/angularJS/angular.min.js"></script>  
       <script src="../vendors/toastr/toastr.min.js"></script>   
-      <script src="../controllers/reportTransactions.js"></script>
+      <script src="../controllers/reportPays.js"></script>
       <script src="../vendors/pagination/paging.js"></script>
       <!-- sidebar menu -->
       <script src="../build/js/menu.js"></script> 

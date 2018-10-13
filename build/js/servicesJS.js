@@ -10,6 +10,8 @@ var menu_service =  "https://webapimenu.azurewebsites.net/MenuDinamic/webresourc
 var service_profiles =  "https://webapitransclick.azurewebsites.net/api/Profiles";
 // DocumentType Service
 var service_documentType =  "https://webapitransclick.azurewebsites.net/api/DocumenType";
+// PayDocument Service
+var service_PaymentDocument =  "https://webapitransclick.azurewebsites.net/api/PaymentDocument";
 // CreditCards Service
 var service_creditCards =  "https://webapitransclick.azurewebsites.net/api/Creditcards";
 // Consumption Service
