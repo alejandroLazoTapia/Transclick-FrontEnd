@@ -29,7 +29,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
                 getPagination('#datatable-responsive');                
             }           
         }, function (error) {
-            toastr.error("Ocurrió un error al intentar leer el registro");
+            toastr.error("El Usuario Ingresado No Posee transacciones registradas");
             console.log(error);
         });        
     }
