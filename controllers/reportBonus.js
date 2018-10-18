@@ -3,9 +3,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
     var arrayUrl = getUrlVars();
     var url_user = service_user +'/'+ arrayUrl.ID;
-    var url_table = service_PaymentDocument + '?idUser=' + arrayUrl.ID; 
-
-    var url_graphic = service_PaymentDocument + '?idUserGraphic=' + arrayUrl.ID; 
+    var url_graphic = service_bonus + '?idUserGraphic=' + arrayUrl.ID; 
 
     //obtener datos de usuario
     var userReq = new XMLHttpRequest();
@@ -17,7 +15,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     // Obtener transacciones mediante método GET para tabla
     $scope.getData = function() 
     {
-        $http.get(url_table)
+        $http.get(url_graphic)
         .then(function(response){
             if(response.status == 204){
                 toastr.info("No posee transacciones registradas");
@@ -47,7 +45,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             var me= new Array(da[i].ano+' - '+da[i].mes);
             mesAno.push(me);
 
-            var serie = new Array(da[i].mes+'<br>ESTADO BOLETA: '+da[i].estado_boleta, da[i].total_mes);
+            var serie = new Array(da[i].mes, da[i].monto);
             console.log(serie);
             dat.push(serie);
             console.log(dat);
@@ -58,11 +56,19 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
      $(function($){
             $('#grafico').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                      enabled: true,
+                      alpha: 45,
+                      beta: 0
+                    }
+                  },
             title: {
-                text: 'Resumen de Pagos'
+                text: 'Resumen de Bonificaciones'
             },
             subtitle: {
-                text: 'Total / Boleta'
+                text: 'Total / Bonificaciones'
             },
             xAxis: {
                 min: 0,
@@ -75,7 +81,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Consumos ($)'
+                    text: 'Bonificaciones ($)'
                 }
             },
 
@@ -89,19 +95,23 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
                 useHTML: true
             },
             plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 35,
+                    dataLabels: {
+                      enabled: true,
+                      format: '{point.name}'
+                    }
+                  }
+                },
             series: 
             [{
-                type: 'column',
+                type: 'pie',
                 name: userJson.name+' '+userJson.last_name,
                 data: dat
                }
             ]     
-
         });
     });
 });
