@@ -36,7 +36,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
           var xhReq = new XMLHttpRequest();
           xhReq.open("GET", url_graphic, false);
           xhReq.send(null);
-          var da = JSON.parse(xhReq.responseText); ""
+          var da = JSON.parse(xhReq.responseText); 
           console.log(da);
           var dat = [];
           var mesAno = [];
