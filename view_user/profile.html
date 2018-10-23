@@ -16,9 +16,10 @@
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
     <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
-
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet" />
+        <!-- Plugin CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 </head>
 
 
@@ -40,7 +41,7 @@
                   </div>
                   <div class="profile_info">
                     <span>Bienvenido:</span>
-                    <h2>{{profile.name}} {{profile.last_name}}</h2>
+                    <h2>{{infoProfile.name}} {{infoProfile.last_name}}</h2>
                   </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -87,7 +88,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">{{profile.name}} {{profile.last_name}}
+                    <img src="images/img.jpg" alt="">{{infoProfile.name}} {{infoProfile.last_name}}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -178,39 +179,29 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-                                        <div class="profile_img">
-                                            <div id="crop-avatar">
-                                                <!-- Current avatar
-                                                <img class="img-responsive avatar-view" src="#" alt="Avatar" title="Change the avatar">
-                                                -->
-                                            </div>
-                                        </div>
-                                        <h3>{{entity.name}} {{entity.last_name}}</h3>                                       
-
+                                    <div>
                                         <!-- start skills -->
-                                        <h4>Status</h4>
-                                        <ul class="list-unstyled user_data">
-                                            <li>
-                                                <p>Consumo promedio</p>
-                                                <div class="progress progress_sm">
-                                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <p>Bonificación</p>
-                                                <div class="progress progress_sm">
-                                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <!-- end of skills -->
+                                    <!-- top tiles -->
+                                    <div class="row tile_count">
+                                            <h4>Promedio últimos 3 meses</h4>
+                                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                            <span class="count_top"><i class="fa fa-money"></i> Pagos</span>
+                                            <div class="count blue">{{(PromedioPays/1000/3)| currency : '' : 0}}k</div>
+                                            <span class="count_bottom"><i id="colorPercentPays"><i id="percentPays"></i>{{porcentajePays}} </i> Mes anterior</span>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                                    <span class="count_top"><i class="fa fa-money"></i> Bonus</span>
+                                                    <div class="count blue">{{(PromedioBonus/1000)| currency : '' : 0}}k</div>
+                                                    <span class="count_bottom"><i id="colorPercentBonus"><i id="percentBonus"></i>{{porcentajeBonus}} </i> Mes anterior</span>
+                                                  </div> 
+                                        </div>
+                                        <!-- /top tiles -->
 
                                     </div>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <div>
                                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                             <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                                <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Personal</a>
+                                                <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Información Personal</a>
                                                 </li>                                                                                              
                                             </ul>
                                             <div id="myTabContent" class="tab-content">
@@ -225,10 +216,10 @@
                                                                 <p class="month">May</p>
                                                             </div>
                                                             <div class="message_wrapper">
-                                                                <blockquote class="message">Documento: {{profile.num_document}} </blockquote>
-                                                                <blockquote class="message">Sexo: {{profile.sex}}</blockquote>
-                                                                <blockquote class="message">Fecha Nacimiento: {{profile.birth_date}}</blockquote>
-                                                                <blockquote class="message">Email: {{profile.email}}</blockquote>
+                                                                <blockquote class="message">Documento: {{infoProfile.num_document}} </blockquote>
+                                                                <blockquote class="message">Sexo: {{infoProfile.sex}}</blockquote>
+                                                                <blockquote class="message">Fecha Nacimiento: {{infoProfile.birth_date}}</blockquote>
+                                                                <blockquote class="message">Email: {{infoProfile.email}}</blockquote>
                                                                 <br />
                                                             </div>
                                                         </li>
@@ -254,8 +245,7 @@
                                                     </ul>
 
                                                 </div>
-                                                <a class="btn btn-success btn-group-justified"><i class="fa fa-edit m-right-xs"></i>Editar Perfil</a>
-
+                                                <button id="btnEditProfile" type="button" class="btn btn-success btn-group-justified" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-edit m-right-xs"></i> Actualizar datos</a></button>
                                             </div>
                                         </div>
                                     </div>
@@ -265,6 +255,56 @@
 
                         </div>
                     </div>
+
+          <!-- Large modal -->
+          <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title" id="myModalLabel">Actualizar datos</h4>
+                </div>
+                <div class="">
+                  <div class="x_content">
+                    <!-- Init SmartWizard Content -->
+                        <div class="x_content" >
+                          <br />
+                          <form class="form-horizontal form-label-left input_mask">
+                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Nombre" ng-model="profile.name" data-inputmask="'mask' : ''">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                  </div>
+
+                                  <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Apellido" ng-model="profile.last_name" onkeyup="mayusc(this);">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                  </div>
+            
+                                  <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left" id="single_cal2" placeholder="Fecha Nacimiento" ng-model="profile.birth_date" data-inputmask="'mask' : '99-99-9999'" min="0" max="12" required>
+                                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+    
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                              <input type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Password" ng-model="JsonCard.secure_code">
+                                  <span class="fa fa-key form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+      
+                          </form>
+                        </div>
+                      </div>
+                    <!-- End SmartWizard Content -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" ng-click="save($profile)">Guardar</button>
+                </div>
+
+              </div>
+            </div>
+
                 </div>
             </div>
             </form>
@@ -289,27 +329,22 @@
     <script src="../vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- morris.js -->
-    <script src="../vendors/raphael/raphael.min.js"></script>
-    <script src="../vendors/morris.js/morris.min.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <!-- Mask -->
+    <script src="../vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>    
     <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
-    
-    <!-- Utils & Data -->
-    <script src="../build/js/utilJS.js"></script>
-    <script src="../build/js/servicesJS.js"></script>
+    <script src="../build/js/custom.min.js"></script>  
     <!-- Plugin JS -->
     <script src="../build/js/mdb.min.js"></script>
     <script src="../build/js/jquery.cookie.js"></script>
     <script src="../vendors/angularJS/angular.min.js"></script>  
     <script src="../vendors/toastr/toastr.min.js"></script>   
-    <script src="../controllers/profileController.js"></script>
+    <!-- Utils & Data -->
+    <script src="../build/js/utilJS.js"></script>
+        <script src="../build/js/servicesJS.js"></script>
     <!-- sidebar menu -->
     <script src="../build/js/menu.js"></script> 
+
+    <script src="../controllers/profileController.js"></script>
+
 </body>
 </html>

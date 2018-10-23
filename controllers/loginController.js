@@ -22,12 +22,12 @@ $scope.ButtonClick = function () {
   //console.log(datos);
   //console.log(request);
   
-  // Si el request est� OK
-  request.done(function (response, textStatus, errorThrown) {                 
+  // Si el request esta OK
+  request.done(function (response, textStatus, errorThrown) {  
+    //console.log(request.status);                   
+      if (request.status == 200) {
+        var entity = JSON.parse(request.responseText);
 
-      var entity = JSON.parse(request.responseText);
-      
-      if (textStatus == "success") {
          // si el login es correcto creo la sesion en verdadero         
          var queryString = "ID=" + entity[0].id +"&"+ "PROFILE=" +entity[0].id_perfil;         
          var queryStringEncrypt = window.btoa(queryString);
@@ -39,9 +39,9 @@ $scope.ButtonClick = function () {
           $window.location.href = getAbsolutePath() + "/view_user/profile.html?" + queryStringEncrypt;
          }              
           
-      } else {
+      } else if (request.status == 204) {
           // si el login es incorrecto creo la sesion en falso y doy anuncio de credenciales invalidad.
-        toastr.error("Error:" + errorThrown);
+        toastr.error("Credenciales inválidas");
     }
   });
 

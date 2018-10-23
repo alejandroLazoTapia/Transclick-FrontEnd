@@ -223,7 +223,7 @@
                           <tr class="headings">                                                            
                             <th class="column-title">FECHA</th>
                             <th class="column-title">HORA</th>
-                            <th class="column-title">MONTO DESCUENTO</th>
+                            <th class="column-title">DESCUENTO</th>
                           
                           </tr>
                         </thead>
@@ -240,7 +240,7 @@
                             </td>
                             <td>
                               <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-                              <span ng-hide="data.editable">{{data.monto}}</span>
+                              <span ng-hide="data.editable">{{data.monto| currency : '$ ' : 0}}</span>
                           </td>   
                           </tr>                          
                         </tbody>

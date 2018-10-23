@@ -232,15 +232,15 @@
                           <tr class="even pointer" ng-repeat="data in JsonData">
                               <td>
                                   <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-                                  <span ng-hide="data.editable">{{data.ano}}-{{data.mes}}-{{data.dia}}</span>
+                                  <span ng-hide="data.editable">{{data.date}}</span>
                               </td>
                             <td>
                                 <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-                                <span ng-hide="data.editable">{{data.hora}}:{{data.minuto}}:{{data.segundo}}</span>
+                                <span ng-hide="data.editable">{{data.hour}}</span>
                             </td>
                             <td>
                               <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.rate_value" required/>
-                              <span ng-hide="data.editable">$ {{data.valor}}</span>
+                              <span ng-hide="data.editable">{{data.valor| currency : '$ ' : 0}}</span>
                             </td>
                               <td>
                                 <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.bus" required/>

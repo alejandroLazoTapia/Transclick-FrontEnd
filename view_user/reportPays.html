@@ -222,11 +222,11 @@
                                                        
                           <tr class="headings">                                                            
                             <th class="column-title">FECHA</th>
-                            <th class="column-title">CONSUMOS NETO</th>
-                            <th class="column-title">DESCUENTO</th>
+                            <th class="column-title">VALOR</th>
+                            <th class="column-title">DCTO</th>
                             <th class="column-title">IVA</th>
-                            <th class="column-title">TOTAL MES</th>
-                            <th class="column-title">ESTADO BOLETA</th>
+                            <th class="column-title">TOTAL</th>
+                            <th class="column-title">BOLETA</th>
                           </tr>
                         </thead>
                         
@@ -238,19 +238,19 @@
                             </td>
                             <td>
                               <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.bus" required/>
-                              <span ng-hide="data.editable">{{data.neto}}</span>
+                              <span ng-hide="data.editable">{{data.neto| currency : '$ ' : 0}}</span>
                             </td>
                             <td>
                               <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-                              <span ng-hide="data.editable">{{data.descuento}}</span>
+                              <span ng-hide="data.editable">{{data.descuento| currency : '$ ' : 0}}</span>
                           </td>
                           <td>
                             <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-                            <span ng-hide="data.editable">{{data.iva}}</span>
+                            <span ng-hide="data.editable">{{data.iva| currency : '$ ' : 0}}</span>
                         </td>
                             <td>
                               <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.rate_value" required/>
-                              <span ng-hide="data.editable">{{data.total_mes}}</span>
+                              <span ng-hide="data.editable">{{data.total_mes| currency : '$ ' : 0}}</span>
                             </td>
                               <td>
                                 <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.bus" required/>

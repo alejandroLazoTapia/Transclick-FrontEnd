@@ -10,10 +10,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     var userReq = new XMLHttpRequest();
     userReq.open("GET", url_user, false);
     userReq.send(null);
-    var userJson = JSON.parse(userReq.responseText); //variable con datos de usuario
-
-
-    
+    var userJson = JSON.parse(userReq.responseText); //variable con datos de usuario  
 
     // Obtener transacciones mediante método GET
     $scope.getData = function() 

@@ -7,6 +7,9 @@ function validateInput(){
     if ($('#email').val() == ''){
       obj.status = false;
       obj.message = "Debe ingresar email.";
+    }else if(!IsEmail($('#email').val())){
+        obj.status = false;
+        obj.message = "Email inválido.";
     }else if($('#password').val()  == ''){
       obj.status = false;
       obj.message = "Debe ingresar password.";

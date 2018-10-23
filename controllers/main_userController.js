@@ -65,14 +65,15 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         $http.get(url)
         .then(function(response){
             $scope.getProfile();
-            $scope.getDocumentType();                       
-            $scope.JsonDataUser = response.data;
+            $scope.getDocumentType();           
+            console.log(response.data);
+            
+            $scope.JsonDataUser = response.data[0];
+            console.log($scope.JsonDataUser);
+
             var passEnc = $scope.JsonDataUser.password;
             $scope.JsonDataUser.password = decrypt(passEnc); 
-            var birth_date = new Date($scope.JsonDataUser.birth_date);
-            $scope.JsonDataUser.birth_date = birth_date.getMonth() + "/" + birth_date.getDate() + "/" + birth_date.getFullYear();   // Returns '02-8-16'                                      
 
-            //console.log(response.data);
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
@@ -88,7 +89,8 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         $("table tr:eq("+fila+") #optTypeDoc").removeAttr("disabled");
 
         $scope.entity = $scope.JsonData[index];
-        console.log($window.atob($scope.JsonData[index].password));
+        //console.log($scope.entity);
+        //console.log($window.atob($scope.JsonData[index].password));
         $scope.entity.passwordDecrypt = $window.atob($scope.JsonData[index].password);
         $scope.entity.index = index;
         $scope.entity.editable = true;     
