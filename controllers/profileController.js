@@ -6,15 +6,19 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
     var url_pays = service_PaymentDocument + '?idUser=' + arrayUrl.ID; 
     var url_consumption= service_consumption + '?idUser=' + arrayUrl.ID; 
 
+    var today = new Date()
+    $scope.today = today;
 
     // Obtener usuario mediante método GET
     getDataProfile = function() 
     {
         $http.get(url_profile)
         .then(function(response){
-            console.log(response.data);
+            //console.log(response.data);
             $scope.infoProfile = response.data[0];                    
-            $scope.profile = response.data[0];                    
+            $scope.profile = response.data[0];  
+            
+
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
@@ -133,14 +137,11 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
 
       //Función para insertar o modificar registros
       $scope.save = function(profile)
-      {
-          var index = profile;
-          console.log(index);
-
+      {          
           $scope.entity = $scope.profile;            
-          $scope.entity.index = profile;
-          var password = $scope.profile.password;
+          var password = $scope.entity.passwordDecrypt;
           $scope.entity.password =  encrypt(password);
+          $scope.entity.birth_date =  $scope.entity.dateString;
                           
           // Generar request al servicio
           var datos = $scope.entity;
@@ -150,17 +151,16 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
               datos.id= 0;
           }
 
-          var url = service_user  + '/' + $scope.entity; 
-
-          console.log(datos);
-
           if($scope.entity.name != ''){
               if($scope.entity.last_name != ''){
-                  $http.post(url,datos,config)      
+                  $http.post(service_user,datos,config)      
                   .then(function (response) {
+                     $scope.clear();
                       getDataProfile();
+                      $('#modal').modal('hide');
+
                       toastr.success('Registro guardado exitosamente');
-                      console.log(response);
+                      //console.log(response);
   
                   }, function (error) {
                       toastr.error("Ocurrió un error al intentar insertar el registro");
@@ -173,7 +173,31 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
               toastr.warning("Debe ingresar nombre");    	
           }
  
-      };     
+      };
+      
+          //Función para editar registros
+     $scope.edit = function()
+     {
+        $scope.entity = $scope.profile;
+
+        var pass = $scope.entity.password;
+        $scope.entity.passwordDecrypt = decrypt(pass);   
+        
+        var birth = $scope.entity.birth_date;
+        $scope.entity.dateString = new Date(birth);
+
+        console.log($scope.entity.passwordDecrypt);
+        console.log($scope.entity.dateString);
+
+        console.log($scope.entity);
+     }
+
+     $scope.clear = function(data) {
+        $scope.profile = {};
+        $scope.entity = {};
+        // Filter through the selected items if needed
+     }; 
+       
      
 } 
 );

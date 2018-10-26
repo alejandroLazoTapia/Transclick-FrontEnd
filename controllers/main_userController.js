@@ -60,17 +60,21 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     {
         $scope.entity = $scope.JsonData[index];
         $scope.entity.index = index;            
+        
+        var pass = $scope.JsonData[index].password;
+        $scope.entity.passwordDecrypt = decrypt(pass);   
+
+        var birth = $scope.entity.birth_date;
+        console.log(birth);
+        $scope.entity.dateString = new Date(birth);
+
         var url = service_user + '/' + $scope.entity.id; 
 
         $http.get(url)
         .then(function(response){
             $scope.getProfile();
-            $scope.getDocumentType();           
-            console.log(response.data);
-            
+            $scope.getDocumentType();                       
             $scope.JsonDataUser = response.data[0];
-            console.log($scope.JsonDataUser);
-
             var passEnc = $scope.JsonDataUser.password;
             $scope.JsonDataUser.password = decrypt(passEnc); 
 
@@ -89,9 +93,14 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         $("table tr:eq("+fila+") #optTypeDoc").removeAttr("disabled");
 
         $scope.entity = $scope.JsonData[index];
-        //console.log($scope.entity);
-        //console.log($window.atob($scope.JsonData[index].password));
-        $scope.entity.passwordDecrypt = $window.atob($scope.JsonData[index].password);
+        var pass = $scope.JsonData[index].password;
+        $scope.entity.passwordDecrypt = decrypt(pass);   
+
+        var birth = $scope.entity.birth_date;
+        console.log(birth);
+        $scope.entity.dateString = new Date(birth);
+
+
         $scope.entity.index = index;
         $scope.entity.editable = true;     
         $scope.entity.disabled = false; 
@@ -121,14 +130,10 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
      
      
     //Función para insertar o modificar registros
-     $scope.save = function(JsonDataUser)
+     $scope.save = function(entity)
         {
-            var index = JsonDataUser;
-            console.log(index);
-
-            $scope.entity = $scope.JsonDataUser;            
-            $scope.entity.index = JsonDataUser;
-            var password = $scope.JsonDataUser.password;
+            $scope.entity = $scope.entity;            
+            var password = $scope.entity.passwordDecrypt;
             $scope.entity.password =  encrypt(password);
                             
             // Generar request al servicio
@@ -139,15 +144,15 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
                 datos.id= 0;
             }
 
-            var url = service_user  + '/' + $scope.entity; 
-
-            console.log(datos);
+            //console.log(datos);
 
             if($scope.entity.id_doc_type != undefined){
                 if($scope.entity.sex != undefined){
-                    $http.post(url,datos,config)      
+                    $http.post(service_user,datos,config)      
                     .then(function (response) {
+                        $scope.clear();                        
                         $scope.getData();
+                        $('#modal').modal('hide');
                         toastr.success('Registro guardado exitosamente');
                         console.log(response);
     
@@ -219,10 +224,13 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         $scope.JsonData[index].disabled = true;                                   
         $scope.entity = $scope.JsonData[index];
         $scope.entity.index = index;
+
+
     };     
    
      $scope.clear = function(data) {
         $scope.JsonDataUser = {};
+        $scope.entity = {};
         // Filter through the selected items if needed
      }; 
 

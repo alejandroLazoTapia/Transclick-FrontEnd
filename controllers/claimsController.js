@@ -1,16 +1,19 @@
 
 angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $window) {
+        
     $scope.JsonData = {}
-
     var arrayUrl = getUrlVars();
 
+    var url_claims = service_claims  + '?idUser=' + arrayUrl.ID; 
+
+    console.log(url_claims);
     // Obtener motivos mediante método GET
     $scope.getReasons = function() 
     {
         $http.get(service_claimsReasons)
         .then(function(response){
             $scope.reasonsJson =  response.data;
-            //console.log(response.data);                
+            console.log(response.data);                
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
@@ -36,7 +39,7 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
 
     $scope.getData = function() 
     {
-        $http.get(service_claims)
+        $http.get(url_claims)
         .then(function(response){
             if(response.status == 204){
                 toastr.info("No posee medios de pago registrados");

@@ -74,7 +74,10 @@ angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $
 
             $http.post(url,datos,config)      
             .then(function (response) {
+                $scope.clear();
                 $scope.getData();
+                $('#modal').modal('hide');
+                
                 toastr.success('Registro guardado exitosamente');
                 console.log(response);
 
@@ -122,6 +125,7 @@ angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $
         $scope.clear = function(data) {
             $scope.JsonDataUser = {};
             $scope.JsonCard = {};
+            $scope.entity = {};
             // Filter through the selected items if needed
          }; 
     
