@@ -74,34 +74,57 @@ $scope.ButtonClick = function () {
 
   //console.log(service_user);
   //console.log(datos);
-  console.log(request);
+  //console.log(request);
+
+          // GET: api/Users?email=PRUEBA@HOTMAIL.COM
+  urlServiceUser = service_user + '?email=' + $scope.email.toUpperCase()	;
+
+  $scope.ExistUser = function() 
+  {
+      $http.get(urlServiceUser)
+      .then(function(response){
+        //console.log(response.status);
+          var existUser;
+          existUser =response.status;          
+
+          //Valido si se registro un usuario con el email
+          if(existUser == 204){
+            // Si el request est� OK
+            request.done(function (jqXHR, textStatus, errorThrown) {             
+              console.log(jqXHR);
+        
+                if (textStatus == "success") {
+                    toastr.success('Usuario registrado exitosamente.');    
+                              
+                    //$window.location.href = getAbsolutePath() + "/login.html";
+                } else {
+                    // si el login es incorrecto creo la sesion en falso y doy anuncio de credenciales invalidad.
+                  toastr.error("Error:" + errorThrown);
+              }
+              });
+        
+                // Si falla el Request
+              request.fail(function (jqXHR, textStatus, errorThrown) {  
+              console.log(textStatus + ": " + errorThrown);          
+              if(jqXHR.status == 404){
+                toastr.error("Credenciales inválidas.");
+              }else if (jqXHR.status == 500) {
+                toastr.warning("Error interno del servidor [500].");                    
+              }else if (jqXHR.status == 0) {
+                toastr.info("Verifique su conexión [0].");                    
+              }          
+              });
+          }else{
+            toastr.error("Email ya se encuentra registrado");
+          }
+      }, function (error) {
+          toastr.error("Ocurrió un error al intentar leer el registro");
+          console.log(error);
+      });        
+  }
+
+  $scope.ExistUser();
   
-  // Si el request est� OK
-  request.done(function (jqXHR, textStatus, errorThrown) {             
-    console.log(jqXHR);
-
-      if (textStatus == "success") {
-          toastr.success('Usuario registrado exitosamente.');    
-                     
-          //$window.location.href = getAbsolutePath() + "/login.html";
-      } else {
-          // si el login es incorrecto creo la sesion en falso y doy anuncio de credenciales invalidad.
-        toastr.error("Error:" + errorThrown);
-    }
-  });
-
-  // Si falla el Request
-  request.fail(function (jqXHR, textStatus, errorThrown) {  
-    console.log(textStatus + ": " + errorThrown);          
-    if(jqXHR.status == 404){
-      toastr.error("Credenciales inválidas.");
-    }else if (jqXHR.status == 500) {
-      toastr.warning("Error interno del servidor [500].");                    
-    }else if (jqXHR.status == 0) {
-      toastr.info("Verifique su conexión [0].");                    
-    }          
-  });
-
 }else{
   toastr.info(validate.message);                    
 } 
