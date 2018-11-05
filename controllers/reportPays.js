@@ -33,6 +33,17 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         });        
     }
     $scope.getData();
+
+
+    $scope.view = function(index) 
+          {
+            var data = $scope.JsonData[index];
+            console.log(data);
+       
+            var queryString = "mes=" + data.mes +"&"+"ano="+data.ano+"&"+"descuento="+data.descuento+"&"+"neto="+data.neto+"&"+"iva="+data.iva+"&"+"total_mes="+data.total_mes+"&"+"estado_boleta="+data.estado_boleta+"&"+"id_boleta="+data.id_boleta+"&"+"id_usuario="+data.id_usuario;         
+            var queryStringEncrypt = window.btoa(queryString);
+             $window.open(getAbsolutePath() + "/billPays.html?" + queryStringEncrypt);
+          }
     
 
           var xhReq = new XMLHttpRequest();

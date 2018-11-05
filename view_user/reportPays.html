@@ -21,6 +21,7 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+ 
 
   </head>
 
@@ -43,7 +44,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>{{infoProfile.name}} {{infoProfile.last_name}}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -89,7 +90,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                    <img src="images/img.jpg" alt="">{{infoProfile.name}} {{infoProfile.last_name}}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -208,7 +209,9 @@
                   </div> 
                   <div id="grafico"></div>
                   <div class="x_content">                                          
+                  
                     <div class="table-responsive">
+                       
                           <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap bulk_action" cellspacing="0" width="100%">
                               <thead>  
                                                          
@@ -227,11 +230,15 @@
                             <th class="column-title">IVA</th>
                             <th class="column-title">TOTAL</th>
                             <th class="column-title">BOLETA</th>
+                            <th class="column-title">VER FACTURA</th>
                           </tr>
                         </thead>
-                        
+
+                      
                         <tbody>
+                       
                           <tr class="even pointer" ng-repeat="data in JsonData">
+                         
                             <td>
                                 <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
                                 <span ng-hide="data.editable">{{data.ano}} - {{data.mes}}</span>
@@ -256,12 +263,19 @@
                                 <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.bus" required/>
                                 <span ng-hide="data.editable">{{data.estado_boleta}}</span>
                               </td>
-                        
-                          </tr>                          
+                            
+                              <td>
+                                  <button type="button" class="btn btn-primary" ng-click='view($index)'>ver</button>
+                              </td>
+                          </tr>    
+                                        
                         </tbody>
-                      </table>              
+                  
+                      </table>  
+                    
                       <div class="pagination"></div>                      
-                    </div>							
+                    </div>		
+                    					
                   </div>
                 </div>
               </div>
@@ -282,8 +296,10 @@
         </div>
       </div>
 
+  
       <!-- jQuery -->
       <script src="../vendors/jquery/dist/jquery.min.js"></script>
+     
       <!-- Bootstrap -->
       <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
       <!-- FastClick -->
@@ -313,5 +329,4 @@
       <!-- sidebar menu -->
       <script src="../build/js/menu.js"></script> 
   </body>
-  
 </html>

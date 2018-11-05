@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	
+	<title>Detalle Boleta</title>
+
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+   
+    
+    
+    <link href="../build/css/print.css" rel="stylesheet">
+    <link href="../build/css/style.css" rel="stylesheet">>
+
+</head>
+
+<body class="nav-md" ng-app="App" ng-controller="CrudCtrl">
+	
+<div id="HTMLtoPDF">	
+	<div id="page-wrap">
+
+		<a href="" onclick="HTMLtoPDF()"> Descargar </a><i class="fa fa-credit-card"></i></a>
+		<textarea id="header">TRANSCLICK</textarea>
+		
+		<div id="identity">
+<div>
+Calle Nueva 1660, 
+Huechuraba, 
+Región Metropolitana
+</div>
+<div>
+Phone: (555) 555-5555
+<br>
+	<br>	
+		<div id="customer">
+				{{user.name}} {{user.last_name}}
+				<br>
+				{{user.email}}
+		</div>
+		
+		<div>
+				<table id="meta">
+						
+					<tr>
+								<td class="meta-head">Fecha</td>
+								<td><textarea id="date">{{data.mes}} - {{data.ano}} </textarea></td>
+						</tr>
+						<tr>
+								<td class="meta-head">Monto a Pagar</td>
+								<td><div class="due">{{data.total_mes| currency : '$ ' : 0}}</div></td>
+						</tr>
+
+				</table>
+			
+				<br>
+				<br>
+
+				<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap bulk_action" cellspacing="0" width="100%">
+				<thead>  
+										   
+					<tr class="headings">                                                            
+						<th class="column-title">RESUMEN</th>
+						<th class="column-title">VALOR</th>
+					</tr>	
+		  </thead>
+
+		
+		  <tbody>
+		
+			<tr class="headings">
+				<th>Consumo Neto</th>
+		   <td>	<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.bus" required/>
+				<span ng-hide="data.editable">{{data.neto| currency : '$ ' : 0}}</span>
+			</td>
+			</tr>
+			<tr class="headings">
+				<th>Descuento Por Bonificaciones</th>
+				<td>
+				<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
+				<span ng-hide="data.editable">{{data.descuento| currency : '$ ' : 0}}</span>
+			</td>	
+		
+			</tr>	                   
+		  </tbody>
+	
+			
+		</table>  
+		<br>
+		<table id="meta">
+				<tr>
+						<th scope="col">
+							Sub Total
+						</th>
+							<td>
+								<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
+								<span ng-hide="data.editable">{{data.neto-data.descuento| currency : '$ ' : 0}}</span>
+							</td>
+					</tr>
+
+			<tr >
+					<th>
+						Iva
+					</th>
+						<td>
+							<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
+							<span ng-hide="data.editable">{{data.iva| currency : '$ ' : 0}}</span>
+						</td>
+				</tr>
+				<tr>
+						<th>
+							Total
+						</th>
+							<td>
+								<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
+								<span ng-hide="data.editable">{{data.total_mes| currency : '$ ' : 0}}</span>
+							</td>
+					</tr>
+		</table>
+	
+	</div>
+
+	
+	</div>	
+
+</div>  
+	
+	</div>
+	
+	</div>
+
+
+   <!--pdf-->
+   <script src="../build/js/jspdf.js"></script>
+    
+   <script src="../build/js/pdfFromHTML.js"></script>
+   <!-- jQuery -->
+   <script src="../vendors/jquery/dist/jquery.min.js"></script>
+   
+	<!-- Bootstrap -->
+	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="../vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="../vendors/nprogress/nprogress.js"></script>
+	<!-- iCheck -->
+	<script src="../vendors/iCheck/icheck.min.js"></script>
+	<!-- bootstrap-daterangepicker -->
+	<script src="../vendors/moment/min/moment.min.js"></script>
+	<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="../build/js/custom.min.js"></script>
+	<!-- Utils & Data -->
+	<script src="../build/js/servicesJS.js"></script>
+	<!-- Plugin JS -->
+	<script src="../build/js/mdb.min.js"></script>
+	<script src="../build/js/jquery.cookie.js"></script>
+	<script src="../build/js/utilJS.js"></script>
+	<script src="../vendors/angularJS/angular.min.js"></script>  
+	<script src="../vendors/toastr/toastr.min.js"></script>   
+	<script src="../controllers/billPays.js"></script>
+	<script src="../vendors/pagination/paging.js"></script>
+
+
+ </body>
+</html>
