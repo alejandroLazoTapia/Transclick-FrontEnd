@@ -19,18 +19,22 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     $scope.getUser();
 
 
-//    $scope.getUser=function()
-  //  {
-    //    $scope.user=userJson;
-      //  console.log($scope.user);
-    // }  
-    // $scope.getUser(); 
-
-
     $scope.getData = function() 
     {
         $scope.data = data;    
         console.log($scope.data);
     }
-    $scope.getData(); 
+    $scope.getData();
+    
+    $scope.printDiv = function (nombreDiv) {
+        var contenido= document.getElementById(nombreDiv).innerHTML;
+        var contenidoOriginal= document.body.innerHTML;
+   
+        document.body.innerHTML = contenido;
+   
+        window.print();
+   
+        document.body.innerHTML = contenidoOriginal;
+   }
+
 });
