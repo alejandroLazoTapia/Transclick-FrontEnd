@@ -7,11 +7,11 @@ specialElementHandlers = {
 	}
 }
 margins = {
-		top: 80,
-		bottom: 60,
-		left: 40,
-		width: 522
-  };
+		top: 10,
+		bottom: 10,
+		left: 80,
+		width: 450,
+	};
 pdf.fromHTML(
   	source // HTML string or DOM elem ref.
   	, margins.left // x coord
