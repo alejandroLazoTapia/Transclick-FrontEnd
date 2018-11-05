@@ -1,4 +1,15 @@
 
+ function printDiv(nombreDiv) {
+    var contenido= document.getElementById(nombreDiv).innerHTML;
+    var contenidoOriginal= document.body.innerHTML;
+
+    document.body.innerHTML = contenido;
+
+    window.print();
+
+    document.body.innerHTML = contenidoOriginal;
+}
+
 angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window) {
 
     var data=getUrlVars();
@@ -26,15 +37,5 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     }
     $scope.getData();
     
-    $scope.printDiv = function (nombreDiv) {
-        var contenido= document.getElementById(nombreDiv).innerHTML;
-        var contenidoOriginal= document.body.innerHTML;
-   
-        document.body.innerHTML = contenido;
-   
-        window.print();
-   
-        document.body.innerHTML = contenidoOriginal;
-   }
-
+  
 });
