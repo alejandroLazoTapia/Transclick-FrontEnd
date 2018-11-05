@@ -23,33 +23,44 @@
 <body class="nav-md" ng-app="App" ng-controller="CrudCtrl">
 	
 <div id="HTMLtoPDF">	
+	
 	<div id="page-wrap">
-
+		
 		<a href="" onclick="HTMLtoPDF()"> Descargar </a><i class="fa fa-credit-card"></i></a>
-		<textarea id="header">TRANSCLICK</textarea>
+		<div id="header">TRANSCLICK</div>
 		
 		<div id="identity">
-<div>
-Calle Nueva 1660, 
-Huechuraba, 
-Región Metropolitana
-</div>
-<div>
-Phone: (555) 555-5555
-<br>
-	<br>	
-		<div id="customer">
-				{{user.name}} {{user.last_name}}
-				<br>
-				{{user.email}}
+				<img src="images/login/title.png" width="200" height="100" align="right">
+			<label>
+			Calle Nueva 1660, 
+			Huechuraba, 
+			Región Metropolitana
+		</label>
+		<br>
+		<label>
+			Phone: (+569) 555-65748
+		</label>
+
+			
+				
+			
 		</div>
-		
-		<div>
+<br>
+<br>
+<br>
+<br>
+<br>
+		<div id="customer">
+			<label  id="customer-title">Nonbre: {{user.name}} {{user.last_name}}
+				<br>
+				Email: {{user.email}}
+			</label>
+
 				<table id="meta">
 						
-					<tr>
+						<tr>
 								<td class="meta-head">Fecha</td>
-								<td><textarea id="date">{{data.mes}} - {{data.ano}} </textarea></td>
+								<td><label  id="date">{{data.mes}} - {{data.ano}} </label></td>
 						</tr>
 						<tr>
 								<td class="meta-head">Monto a Pagar</td>
@@ -57,83 +68,81 @@ Phone: (555) 555-5555
 						</tr>
 
 				</table>
-			
-				<br>
+		</div>
+
 				<br>
 
-				<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap bulk_action" cellspacing="0" width="100%">
-				<thead>  
+
+			<table id="items">
+			 
 										   
-					<tr class="headings">                                                            
+					<tr class="headings">                                                       
 						<th class="column-title">RESUMEN</th>
 						<th class="column-title">VALOR</th>
 					</tr>	
-		  </thead>
 
 		
-		  <tbody>
 		
 			<tr class="headings">
-				<th>Consumo Neto</th>
-		   <td>	<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.bus" required/>
+				<td>Consumo Neto</td>
+		   <td align="right">	<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.bus" required/>
 				<span ng-hide="data.editable">{{data.neto| currency : '$ ' : 0}}</span>
 			</td>
 			</tr>
 			<tr class="headings">
-				<th>Descuento Por Bonificaciones</th>
-				<td>
+				<td>Descuento Por Bonificaciones</td>
+				<td align="right">
 				<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
 				<span ng-hide="data.editable">{{data.descuento| currency : '$ ' : 0}}</span>
 			</td>	
-		
-			</tr>	                   
-		  </tbody>
-	
+			</tr>	
 			
 		</table>  
 		<br>
+
+
 		<table id="meta">
 				<tr>
-						<th scope="col">
-							Sub Total
-						</th>
-							<td>
-								<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-								<span ng-hide="data.editable">{{data.neto-data.descuento| currency : '$ ' : 0}}</span>
+						<td class="meta-head">Sub Total</td>
+							<td style="width: 189px">
+								{{data.neto-data.descuento| currency : '$ ' : 0}}
 							</td>
-					</tr>
+				</tr>
 
-			<tr >
-					<th>
+			<tr>
+					<td class="meta-head">
 						Iva
-					</th>
-						<td>
-							<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-							<span ng-hide="data.editable">{{data.iva| currency : '$ ' : 0}}</span>
+					</td>
+						<td style="width: 189px">
+							{{data.iva| currency : '$ ' : 0}}
 						</td>
 				</tr>
 				<tr>
-						<th>
+						<td class="meta-head">
 							Total
-						</th>
-							<td>
-								<input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.date_hour" required/>
-								<span ng-hide="data.editable">{{data.total_mes| currency : '$ ' : 0}}</span>
+						</td>
+							<td style="width: 189px">
+								{{data.total_mes| currency : '$ ' : 0}}
 							</td>
 					</tr>
 		</table>
-	
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+		<div id="terms">
+				<h5>Terminos</h5>
+				<label>
+					Se aplicará un cargo financiero del 1.5% sobre saldos impagos después de 30 días.</label>
+			  </div>
+
 	</div>
 
 	
 	</div>	
-
-</div>  
-	
-	</div>
-	
-	</div>
-
 
    <!--pdf-->
    <script src="../build/js/jspdf.js"></script>

@@ -10,6 +10,13 @@
   100% {
     opacity: 1; } }
 
+img {
+  display: block; 
+  margin: 0 auto;
+  max-width: 100%;
+  width: 80%;
+}
+
 @-webkit-keyframes flash {
   0% {
     opacity: 1; }
