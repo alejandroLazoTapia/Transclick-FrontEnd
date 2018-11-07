@@ -94,9 +94,26 @@ $scope.ButtonClick = function () {
               console.log(jqXHR);
         
                 if (textStatus == "success") {
-                    toastr.success('Usuario registrado exitosamente.');    
-                              
-                    //$window.location.href = getAbsolutePath() + "/login.html";
+                    toastr.success('Usuario registrado exitosamente.');  
+                    
+                    //Inicio envío email
+                    var subject="Bienvenido a TransClick";
+                    var message = "Bienvenid@ " +nameArray[0]+ " a nuestra plataforma TransClick, en donde podras realizar tus viajes de maneras mas sencilla, rápida y segura.";
+                    var urlEmail = service_email+"?emailTo="+$scope.email+"&nameTo="+nameArray[0]+"&emailFrom=TransClick@gmail.com&nameFrom=TransClick&subject="+subject+"&message="+message;
+                    var UrlEncodeEmail = encodeURI(urlEmail);
+                    console.log(UrlEncodeEmail);
+                    $http.post(urlEmail)      
+                    .then(function (response) {
+                        //$scope.getData();
+                        //toastr.success('Registro enviado exitosamente');
+                        console.log(response);
+    
+                    }, function (error) {
+                        toastr.error("Ocurrió un error al intentar enviar el registro");
+                        console.log(error);
+                    });
+                    //Fin envío email
+
                 } else {
                     // si el login es incorrecto creo la sesion en falso y doy anuncio de credenciales invalidad.
                   toastr.error("Error:" + errorThrown);

@@ -20,6 +20,9 @@ var service_consumption =  "https://webapitransclick.azurewebsites.net/api/Consu
 var service_claims =  "https://webapitransclick.azurewebsites.net/api/Claims";
 var service_claimsReasons =  "https://webapitransclick.azurewebsites.net/api/ClaimReasons";
 var service_claimStatus =  "https://webapitransclick.azurewebsites.net/api/ClaimStatus";
-
 // Bonus Service
 var service_bonus= "https://webapitransclick.azurewebsites.net/api/bonus";
+// Email Service
+var service_email= "https://webapitransclick.azurewebsites.net/api/Email";
+
+
