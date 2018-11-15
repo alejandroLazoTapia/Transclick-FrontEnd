@@ -2,6 +2,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     $scope.entity = {}
 
     var arrayUrl = getUrlVars();
+    //Se utiliza para desplegar info del usuario
+    $scope.infoUser = arrayUrl;
+    
     var url_user = service_user +'/'+ arrayUrl.ID;
     var url_graphic = service_bonus + '?idUserGraphic=' + arrayUrl.ID; 
 
@@ -14,6 +17,8 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     // Obtener transacciones mediante método GET para tabla
     $scope.getData = function() 
     {
+        $scope.loading = true;
+
         $http.get(url_graphic)
         .then(function(response){
             if(response.status == 204){
@@ -27,7 +32,10 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         }, function (error) {
             toastr.error("El Usuario Ingresado No Posee Pagos registrados");
             console.log(error);
-        });        
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });          
     }
     $scope.getData();
     

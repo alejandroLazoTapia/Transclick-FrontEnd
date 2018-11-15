@@ -12,7 +12,7 @@
 
 angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window) {
 
-    var data=getUrlVars();
+    var data = getUrlVars();
 
     var url_user = service_user +'/'+ data.id_usuario;
 

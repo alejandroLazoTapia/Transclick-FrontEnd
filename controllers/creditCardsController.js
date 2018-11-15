@@ -2,11 +2,15 @@ angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $
     $scope.JsonData = {}
 
     var arrayUrl = getUrlVars();
+    //Se utiliza para desplegar info del usuario
+    $scope.infoUser = arrayUrl;
+
     var url = service_creditCards  + '?idUser=' + arrayUrl.ID; 
 
     // Obtener tarjetas mediante método GET
     $scope.getData = function() 
     {
+        $scope.loading = true;
         $http.get(url)
         .then(function(response){
             if(response.status == 204){
@@ -22,16 +26,20 @@ angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
-        });        
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });         
     }
     
     $scope.getData();
-
-    
+  
      
     //Función para insertar o modificar registros
      $scope.save = function(JsonCard)
         {
+            $scope.loading = true;
+
             var index = JsonCard;
             console.log(index);
 
@@ -84,6 +92,9 @@ angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $
             }, function (error) {
                 toastr.error("Ocurrió un error al intentar insertar el registro");
                 console.log(error);
+            }).finally(function() {
+                // called no matter success or failure
+                $scope.loading = false;
             }); 
    
         };     
@@ -91,6 +102,7 @@ angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $
            //Función para insertar o modificar registros
      $scope.disable = function(index)
      {
+        $scope.loading = true;
 
          $scope.entity = $scope.JsonData[index];
          //$scope.entity.index = index;   
@@ -118,7 +130,10 @@ angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $
             }, function (error) {
                 toastr.error("Ocurrió un error al intentar quitar el registro");
                 console.log(error);
-            }); 
+            }).finally(function() {
+                // called no matter success or failure
+                $scope.loading = false;
+            });  
              
      };    
        

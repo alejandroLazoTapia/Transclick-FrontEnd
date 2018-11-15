@@ -18,10 +18,24 @@
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <!-- Plugin CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">      
+  <style>
+      .loader_process {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          width: 100%;
+          height: 100%;
+          z-index: 9999;
+          background: url('../documentation/images/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+          opacity: .8;
+      }
+  </style>
   </head>
 
-  <body class="nav-sm" class="nav-md" ng-app="App">
+  <body class="nav-sm" class="nav-md" ng-app="App" ng-controller="CreditCardsCtrl">
+      <div class="loader_process" ng-show="loading"></div>
+
     <div class="container body">
       <div class="main_container">
           <div class="col-md-3 left_col">
@@ -39,7 +53,7 @@
                   </div>
                   <div class="profile_info">
                     <span>Bienvenido:</span>
-                     <!--<h2>{{infoProfile.name}} {{infoProfile.last_name}}</h2>-->
+                     <h2>{{infoUser.NAME}} {{infoUser.LAST_NAME}}</h2>
                   </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -67,7 +81,7 @@
                   <a data-toggle="tooltip" data-placement="top" title="Lock">
                     <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                   </a>
-                  <a data-toggle="tooltip" data-placement="top" title="Cerrar sesión" href="http://www.transclick.tk/">
+                  <a data-toggle="tooltip" data-placement="top" title="Cerrar sesión" href="../login.html">
                     <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                   </a>
                 </div>
@@ -86,18 +100,18 @@
                 <ul class="nav navbar-nav navbar-right">
                   <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      <img src="images/img.jpg" alt="">{{infoProfile.name}} {{infoProfile.last_name}}
+                      <img src="images/img.jpg" alt="">{{infoUser.NAME}} {{infoUser.LAST_NAME}}
                       <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                      <li><a href="javascript:;"> Perfil</a></li>
+                      <!-- <li><a href="javascript:;"> Perfil</a></li>
                       <li>
                         <a href="javascript:;">
                           <span class="badge bg-red pull-right">50%</span>
                           <span>Configuración</span>
                         </a>
-                      </li>                    
-                      <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Cerrar sesión</a></li>
+                      </li>                     -->
+                      <li><a href="../login.html"><i class="fa fa-sign-out pull-right"></i> Cerrar sesión</a></li>
                     </ul>
                   </li>
   
@@ -148,7 +162,7 @@
           <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="CreditCardsCtrl">
+        <div class="right_col" role="main" >
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -218,10 +232,10 @@
                     <!-- Init SmartWizard Content -->
                         <div class="x_content" >
                           <br />
-                          <form class="form-horizontal form-label-left input_mask">
+                          <form id="form-claims" class="form-horizontal form-label-left input_mask">
 
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="N° Tarjeta" ng-model="JsonCard.card_number" data-inputmask="'mask' : '****-****-****-****'">
+                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="N° Tarjeta" ng-model="JsonCard.card_number" data-inputmask="'mask' : '****-****-****-****'" required="required">
                                     <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                   </div>
             
@@ -247,15 +261,14 @@
                               <input type="number" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Código de seguridad" ng-model="JsonCard.secure_code">
                                   <span class="fa fa-key form-control-feedback left" aria-hidden="true"></span>
                                 </div>
-      
                           </form>
                         </div>
                       </div>
                     <!-- End SmartWizard Content -->
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                  <button type="button" class="btn btn-primary" ng-click="save($JsonDataUser)">Guardar</button>
+                  <button type="submit" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary" ng-click="save($JsonDataUser)">Guardar</button>
                 </div>
 
               </div>
@@ -302,7 +315,10 @@
 
     <!-- Controllers -->
     <script src="../controllers/creditCardsController.js"></script>   
+      
   </body>
+
+
 
 
 

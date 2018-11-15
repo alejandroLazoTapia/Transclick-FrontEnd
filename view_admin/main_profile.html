@@ -21,14 +21,25 @@
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
-
-
   <!-- Plugin CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
+  <style>
+      .loader_process {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          width: 100%;
+          height: 100%;
+          z-index: 9999;
+          background: url('../documentation/images/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+          opacity: .8;
+      }
+  </style>
   </head>
 
   <body class="nav-sm" ng-app="App" ng-controller="CrudCtrl">
+      <div class="loader_process" ng-show="loading"></div>
+
   <div> 
     <div class="container body">
       <div class="main_container">

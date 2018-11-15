@@ -1,10 +1,3 @@
-   //Crea un cookie con info del usuario
-   $(document).ready(function () {
-    $.cookie("session", false);
-    $.removeCookie("usuario");
-
-});
-
 //Valida los campos ingresados en el formulario  
 function validateInput(){
 var obj =[];
@@ -54,11 +47,12 @@ app.controller('Register', function ($scope, $http, $window) {
 
 // Al ejecutar el evento click en login
 $scope.ButtonClick = function () {
+
   var validate = validateInput();
 
   // Validar campos solicitados
   if (validate.status == true){        
-  
+
   //Se asigna formato de fecha internacional
   var fecha = $scope.birthdate;
   var fechaformat = fecha.format("yyyy-mm-dd'T'HH:MM:ss");
@@ -67,31 +61,28 @@ $scope.ButtonClick = function () {
 
   var fullname = $scope.name;
   var nameArray = fullname.split(' ');
-  
-  // Generar request al servicio
-  var datos = { "id_perfil": 1, "id_doc_type": $scope.typeDocument,  "num_document": $scope.numberDocument, "name": nameArray[0], "last_name": nameArray[1], "email": $scope.email, "sex": $scope.sex, "birth_date": fechaformat, "password": passencrip };
-  var request = $.post(service_user , datos);
 
-  //console.log(service_user);
-  //console.log(datos);
-  //console.log(request);
-
-          // GET: api/Users?email=PRUEBA@HOTMAIL.COM
-  urlServiceUser = service_user + '?email=' + $scope.email.toUpperCase()	;
+  // GET: api/Users?email=PRUEBA@HOTMAIL.COM
 
   $scope.ExistUser = function() 
   {
+    $scope.loading = true;
+    urlServiceUser = service_user + '?email=' + $scope.email.toUpperCase()	;
+
       $http.get(urlServiceUser)
       .then(function(response){
         //console.log(response.status);
           var existUser;
-          existUser =response.status;          
+          existUser =response.status;
 
           //Valido si se registro un usuario con el email
           if(existUser == 204){
+              // Generar request al servicio
+            var datos = { "id_perfil": 1, "id_doc_type": $scope.typeDocument,  "num_document": $scope.numberDocument, "name": nameArray[0], "last_name": nameArray[1], "email": $scope.email, "sex": $scope.sex, "birth_date": fechaformat, "password": passencrip };
+            var request = $.post(service_user , datos);
             // Si el request est� OK
             request.done(function (jqXHR, textStatus, errorThrown) {             
-              console.log(jqXHR);
+              //console.log(jqXHR);
         
                 if (textStatus == "success") {
                     toastr.success('Usuario registrado exitosamente.');  
@@ -137,13 +128,18 @@ $scope.ButtonClick = function () {
       }, function (error) {
           toastr.error("Ocurrió un error al intentar leer el registro");
           console.log(error);
-      });        
+      }).finally(function() {
+        // called no matter success or failure
+        $scope.loading = false;
+
+    });         
   }
 
-  $scope.ExistUser();
+$scope.ExistUser();
   
 }else{
-  toastr.info(validate.message);                    
+  toastr.info(validate.message);  
+                  
 } 
 }
 

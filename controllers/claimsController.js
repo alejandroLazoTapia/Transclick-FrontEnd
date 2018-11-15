@@ -1,8 +1,9 @@
-
 angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $window) {
         
     $scope.JsonData = {}
     var arrayUrl = getUrlVars();
+    //Se utiliza para desplegar info del usuario
+    $scope.infoUser = arrayUrl;
 
     var url_claims = service_claims  + '?idUser=' + arrayUrl.ID; 
 
@@ -10,6 +11,7 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
     // Obtener motivos mediante método GET
     $scope.getReasons = function() 
     {
+        $scope.loading = true;
         $http.get(service_claimsReasons)
         .then(function(response){
             $scope.reasonsJson =  response.data;
@@ -17,7 +19,10 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
-        });        
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });       
     }
 
     $scope.getReasons();
@@ -25,6 +30,7 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
     // Obtener motivos mediante método GET
     $scope.getStatus = function() 
     {
+        $scope.loading = true;
         $http.get(service_claimStatus)
         .then(function(response){
             $scope.StatusJson =  response.data;
@@ -32,13 +38,17 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
-        });        
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });          
     }
 
     $scope.getStatus();
 
     $scope.getData = function() 
     {
+        $scope.loading = true;
         $http.get(url_claims)
         .then(function(response){
             if(response.status == 204){
@@ -51,7 +61,10 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
-        });        
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });       
     }
 
     $scope.getData();
@@ -74,13 +87,11 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
             datos.fecha = getSysdate();
         }
 
-        console.log(datos);
-
         var url = service_claims  + '/' + datos; 
 
-        console.log(datos);
-
         if($scope.entity.id_reason != undefined){
+            $scope.loading = true;
+
                 $http.post(url,datos,config)      
                 .then(function (response) {
                     $scope.getData();
@@ -90,9 +101,12 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
                 }, function (error) {
                     toastr.error("Ocurrió un error al intentar insertar el registro");
                     console.log(error);
-                });             
+                }).finally(function() {
+                    // called no matter success or failure
+                    $scope.loading = false;
+                });              
         }else{
-            toastr.warning("Debe seleccionar motivo");    	
+            toastr.warning("Debe seleccionar motivo");    
         }
 
     };  

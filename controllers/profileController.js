@@ -9,9 +9,11 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
     var today = new Date()
     $scope.today = today;
 
+
     // Obtener usuario mediante método GET
     getDataProfile = function() 
     {
+        $scope.loading = true;
         $http.get(url_profile)
         .then(function(response){
             //console.log(response.data);
@@ -22,13 +24,18 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
         });        
     }    
+
     getDataProfile();
 
         // Obtener pagos mediante método GET para tabla
         $scope.getDataConsumption = function() 
         {
+            $scope.loading = true;
             $http.get(url_consumption)
             .then(function(response){
                 if(response.status == 204){
@@ -40,13 +47,17 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
             }, function (error) {
                 //toastr.error("El Usuario Ingresado No Posee Pagos registrados");
                 console.log(error);
-            });        
+            }).finally(function() {
+                // called no matter success or failure
+                $scope.loading = false;
+            });          
         }
         $scope.getDataConsumption();
 
     // Obtener bonus mediante método GET para tabla
     $scope.getDataBonus = function() 
     {
+        $scope.loading = true;
         $http.get(url_bonus)
         .then(function(response){
             var totalMeses = 0;
@@ -84,13 +95,17 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
         }, function (error) {
             //toastr.error("El Usuario Ingresado No Posee Pagos registrados");
             console.log(error);
-        });        
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });       
     }
     $scope.getDataBonus();
 
     // Obtener pagos mediante método GET para tabla
     $scope.getDataPays = function() 
     {
+        $scope.loading = true;
         $http.get(url_pays)
         .then(function(response){
             var totalMeses = 0;
@@ -130,14 +145,18 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
         }, function (error) {
             //toastr.error("El Usuario Ingresado No Posee Pagos registrados");
             console.log(error);
-        }); 
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });  
     }
     $scope.getDataPays();
 
 
       //Función para insertar o modificar registros
       $scope.save = function(profile)
-      {          
+      {
+          $scope.loading = true;          
           $scope.entity = $scope.profile;            
           var password = $scope.entity.passwordDecrypt;
           $scope.entity.password =  encrypt(password);
@@ -165,7 +184,10 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
                   }, function (error) {
                       toastr.error("Ocurrió un error al intentar insertar el registro");
                       console.log(error);
-                  }); 
+                  }).finally(function() {
+                    // called no matter success or failure
+                    $scope.loading = false;
+                }); 
               }else{
                   toastr.warning("Debe ingresar apellido");    	
               }               
