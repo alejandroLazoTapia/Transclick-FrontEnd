@@ -9,9 +9,11 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
     var today = new Date()
     $scope.today = today;
 
+
     // Obtener usuario mediante método GET
     getDataProfile = function() 
     {
+        $scope.loading = true;
         $http.get(url_profile)
         .then(function(response){
             //console.log(response.data);
@@ -22,13 +24,18 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
         });        
     }    
+
     getDataProfile();
 
         // Obtener pagos mediante método GET para tabla
         $scope.getDataConsumption = function() 
         {
+            $scope.loading = true;
             $http.get(url_consumption)
             .then(function(response){
                 if(response.status == 204){
@@ -40,13 +47,17 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
             }, function (error) {
                 //toastr.error("El Usuario Ingresado No Posee Pagos registrados");
                 console.log(error);
-            });        
+            }).finally(function() {
+                // called no matter success or failure
+                $scope.loading = false;
+            });          
         }
         $scope.getDataConsumption();
 
     // Obtener bonus mediante método GET para tabla
     $scope.getDataBonus = function() 
     {
+        $scope.loading = true;
         $http.get(url_bonus)
         .then(function(response){
             var totalMeses = 0;
@@ -84,13 +95,17 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
         }, function (error) {
             //toastr.error("El Usuario Ingresado No Posee Pagos registrados");
             console.log(error);
-        });        
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });       
     }
     $scope.getDataBonus();
 
     // Obtener pagos mediante método GET para tabla
     $scope.getDataPays = function() 
     {
+        $scope.loading = true;
         $http.get(url_pays)
         .then(function(response){
             var totalMeses = 0;
@@ -130,49 +145,62 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
         }, function (error) {
             //toastr.error("El Usuario Ingresado No Posee Pagos registrados");
             console.log(error);
-        }); 
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });  
     }
     $scope.getDataPays();
 
 
       //Función para insertar o modificar registros
       $scope.save = function(profile)
-      {          
-          $scope.entity = $scope.profile;            
-          var password = $scope.entity.passwordDecrypt;
-          $scope.entity.password =  encrypt(password);
-          $scope.entity.birth_date =  $scope.entity.dateString;
-                          
-          // Generar request al servicio
-          var datos = $scope.entity;
-         
-          //Valido si el ID es null para iniciar y crear
-          if (datos.id == ''){
-              datos.id= 0;
-          }
-
-          if($scope.entity.name != ''){
-              if($scope.entity.last_name != ''){
-                  $http.post(service_user,datos,config)      
-                  .then(function (response) {
-                     $scope.clear();
-                      getDataProfile();
-                      $('#modal').modal('hide');
-
-                      toastr.success('Registro guardado exitosamente');
-                      //console.log(response);
+      {
+        var validate = validateInput();
+        if(validate.status == true){
+            $scope.loading = true;          
+            $scope.entity = $scope.profile;            
+            var password = $scope.entity.passwordDecrypt;
+            $scope.entity.password =  encrypt(password);
+            $scope.entity.birth_date =  $scope.entity.dateString;
+                            
+            // Generar request al servicio
+            var datos = $scope.entity;
+           
+            //Valido si el ID es null para iniciar y crear
+            if (datos.id == ''){
+                datos.id= 0;
+            }
   
-                  }, function (error) {
-                      toastr.error("Ocurrió un error al intentar insertar el registro");
-                      console.log(error);
+            if($scope.entity.name != ''){
+                if($scope.entity.last_name != ''){
+                    $http.post(service_user,datos,config)      
+                    .then(function (response) {
+                       $scope.clear();
+                          getDataProfile();
+                          var queryString = "ID=" + datos.id +"&PROFILE=" +datos.id_perfil+"&NAME=" +datos.name+"&LAST_NAME=" + datos.last_name;         
+                          var queryStringEncrypt = encrypt(queryString);
+                          $window.location.href = getAbsolutePath() + "/profile.html?" + queryStringEncrypt;
+                          $('#modal').modal('hide');
+                          toastr.success('Registro guardado exitosamente');  
+                    }, function (error) {
+                        toastr.error("Ocurrió un error al intentar insertar el registro");
+                        console.log(error);
+                    }).finally(function() {
+                      // called no matter success or failure
+                      $scope.loading = false;
                   }); 
-              }else{
-                  toastr.warning("Debe ingresar apellido");    	
-              }               
-          }else{
-              toastr.warning("Debe ingresar nombre");    	
-          }
- 
+                }else{
+                    toastr.warning("Debe ingresar apellido");    	
+                }               
+            }else{
+                toastr.warning("Debe ingresar nombre");    	
+            }
+   
+        }else{
+            toastr.info(validate.message);  
+        }
+         
       };
       
           //Función para editar registros
@@ -197,7 +225,31 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
         $scope.entity = {};
         // Filter through the selected items if needed
      }; 
-       
+     
+    //Valida los campos ingresados en el formulario  
+    function validateInput(){
+        var obj =[];
+        obj.status = true;
+        obj.message = "";
+        
+        if ($('#txtname').val() == ''){
+            obj.status = false;
+            obj.message = "Ingrese nombre.";
+        }else if($('#txtlastname').val()  == ''){
+            obj.status = false;
+            obj.message = "Ingrese apellido."; 
+        }else if($('#birthdate').val()  == ''){
+            obj.status = false;
+            obj.message = "Ingrese fecha de nacimiento.";        
+        }else if(!IsEmail($('#txtemail').val())){
+            obj.status = false;
+            obj.message = "Email inválido.";
+        }else if($('#txtpass').val()  == ''){
+            obj.status = false;
+            obj.message = "Ingrese password.";
+        }
+            return obj;
+        };      
      
 } 
 );

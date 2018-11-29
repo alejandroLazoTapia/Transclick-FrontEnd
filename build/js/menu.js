@@ -5,7 +5,7 @@ var xhReq = new XMLHttpRequest();
     xhReq.open("GET", menu_service + arrayUrl.PROFILE, false);
     xhReq.send(null);
     var data = JSON.parse(xhReq.responseText);
-    console.log(data);
+    //console.log(data);
 
 //carga los menus
 var builddata = function () {

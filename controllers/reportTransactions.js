@@ -2,6 +2,8 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     $scope.entity = {}
 
     var arrayUrl = getUrlVars();
+    //Se utiliza para desplegar info del usuario
+    $scope.infoUser = arrayUrl;
     var url_user = service_user +'/'+ arrayUrl.ID;
     var url_table= service_consumption + '?idUser=' + arrayUrl.ID; 
     var url_graphic= service_consumption + '?idUserGraphic=' + arrayUrl.ID; 
@@ -15,6 +17,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     // Obtener transacciones mediante método GET
     $scope.getData = function() 
     {
+        $scope.loading = true;
         $http.get(url_table)
         .then(function(response){
             if(response.status == 204){
@@ -26,18 +29,34 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
                 getPagination('#datatable-responsive');                
             }           
         }, function (error) {
-            toastr.error("El Usuario Ingresado No Posee transacciones registradas");
+            toastr.error("Usuario no posee transacciones.");
             console.log(error);
-        });        
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });       
     }
     $scope.getData();
+
+    $scope.exportExcel = function()
+    { 
+        console.log("exportando")
+        // window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#tblConsumptions').html()));     
+        $("#datatable-responsive").table2excel({
+            exclude: ".noExl",
+            name: "Consumptions",
+            filename: "Consumptions"
+
+        });
+
+    };
     
 
           var xhReq = new XMLHttpRequest();
           xhReq.open("GET", url_graphic, false);
           xhReq.send(null);
           var da = JSON.parse(xhReq.responseText);
-          console.log(da);
+          //console.log(da);
           var dat = [];
           var mesAno = [];
           var cant_trx=[];
@@ -50,9 +69,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             cant_trx.push(ca_tx)
 
             var serie = new Array(da[i].mes+'<br> CANTIDAD TRX: '+da[i].cant_trx, da[i].Total);
-            console.log(serie);
+            //console.log(serie);
             dat.push(serie);
-            console.log(dat);
+            //console.log(dat);
           }
         
           

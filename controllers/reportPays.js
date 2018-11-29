@@ -2,6 +2,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     $scope.entity = {}
 
     var arrayUrl = getUrlVars();
+    //Se utiliza para desplegar info del usuario
+    $scope.infoUser = arrayUrl;
+
     var url_user = service_user +'/'+ arrayUrl.ID;
     var url_table = service_PaymentDocument + '?idUser=' + arrayUrl.ID; 
 
@@ -17,6 +20,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     // Obtener transacciones mediante método GET para tabla
     $scope.getData = function() 
     {
+        $scope.loading = true;
         $http.get(url_table)
         .then(function(response){
             if(response.status == 204){
@@ -30,6 +34,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         }, function (error) {
             toastr.error("El Usuario Ingresado No Posee Pagos registrados");
             console.log(error);
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
         });        
     }
     $scope.getData();
@@ -38,7 +45,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     $scope.view = function(index) 
           {
             var data = $scope.JsonData[index];
-            console.log(data);
+            //console.log(data);
        
             var queryString = "mes=" + data.mes +"&"+"ano="+data.ano+"&"+"descuento="+data.descuento+"&"+"neto="+data.neto+"&"+"iva="+data.iva+"&"+"total_mes="+data.total_mes+"&"+"estado_boleta="+data.estado_boleta+"&"+"id_boleta="+data.id_boleta+"&"+"id_usuario="+data.id_usuario;         
             var queryStringEncrypt = window.btoa(queryString);
@@ -50,7 +57,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
           xhReq.open("GET", url_graphic, false);
           xhReq.send(null);
           var da = JSON.parse(xhReq.responseText); ""
-          console.log(da);
+          //console.log(da);
           var dat = [];
           var mesAno = [];
 
@@ -59,9 +66,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             mesAno.push(me);
 
             var serie = new Array(da[i].mes+'<br>ESTADO BOLETA: '+da[i].estado_boleta, da[i].total_mes);
-            console.log(serie);
+            //console.log(serie);
             dat.push(serie);
-            console.log(dat);
+            //console.log(dat);
           }
         
           

@@ -1,24 +1,46 @@
 
-angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window) {
+angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window) {    
+    var arrayUrl = getUrlVars();
+    //Se utiliza para desplegar info del usuario
+    $scope.infoUser = arrayUrl;
+    
     $scope.entity = {}
 
     // Obtener perfiles mediante método GET
     $scope.getData = function() 
     {
+        $scope.loading = true;
         $http.get(service_profiles)
         .then(function(response){
             $scope.JsonData = response.data;
             getPagination('#datatable-responsive');
-            console.log(response.data);
+            //console.log(response.data);
         }, function (error) {
             toastr.error("Ocurrió un error al intentar leer el registro");
             console.log(error);
-        });        
+        }).finally(function() {
+            // called no matter success or failure
+            $scope.loading = false;
+        });
     }
     
     $scope.getData();
     $scope.entity.disabled == true;
 
+    
+    $scope.exportExcel = function()
+    { 
+        var data = $scope.JsonData;
+        //console.log(data);
+
+        $("#el").excelexportjs({
+            containerid: "el", 
+            datatype: 'json', 
+            dataset: data, 
+            columns: getColumns(data)     
+          });
+
+    };
     //Función para editar registros
      $scope.edit = function(index)
      {
@@ -29,17 +51,18 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         $scope.entity.index = index;
         $scope.entity.editable = true;     
         $scope.entity.disabled = false; 
-        console.log($scope.entity);
+        //console.log($scope.entity);
 	 }
    
     
      //Función para eliminar registros
     $scope.delete = function(index)
         {
+            $scope.loading = true;
             $scope.entity = $scope.JsonData[index];
             $scope.entity.index = index;            
             var url = service_profiles + '/' + $scope.entity.id; 
-            console.log($scope.entity); 
+            //console.log($scope.entity); 
 
             $http.delete(url, config)      
             .then(function (response) {
@@ -50,6 +73,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             }, function (error) {
                 toastr.error("Ocurrió un error al intentar eliminar el registro");
                 console.log(error);
+            }).finally(function() {
+                // called no matter success or failure
+                $scope.loading = false;
             });
         }
      
@@ -79,6 +105,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
             if($scope.entity.nombre != ''){
                 if($scope.entity.id_status != undefined){
+                    $scope.loading = true;
                     $http.post(url,datos,config)      
                     .then(function (response) {
                         $scope.getData();
@@ -88,6 +115,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
                     }, function (error) {
                         toastr.error("Ocurrió un error al intentar insertar el registro");
                         console.log(error);
+                    }).finally(function() {
+                        // called no matter success or failure
+                        $scope.loading = false;
                     }); 
                 }else{
                     toastr.warning("Debe seleccionar estado");    	
@@ -119,7 +149,8 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
                 //Extrae item seleccionados
                 console.log(entity.id);  
                 var url = service_profiles + '/' + entity.id; 
-     
+                
+                $scope.loading = true;
                 $http.delete(url, config)      
                 .then(function (response) {
                     $scope.getData();
@@ -128,6 +159,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
                 }, function (error) {
                     toastr.error("Ocurrió un error al intentar eliminar el registro");
                     console.log(error);
+                }).finally(function() {
+                    // called no matter success or failure
+                    $scope.loading = false;
                 });
             }
         });    $scope.JsonData=newDataList;        
