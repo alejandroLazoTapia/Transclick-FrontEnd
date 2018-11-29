@@ -1,0 +1,360 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mantenedor usuarios | </title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+   <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+  <!-- Plugin CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+  <style>
+      .loader_process {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          width: 100%;
+          height: 100%;
+          z-index: 9999;
+          background: url('../documentation/images/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+          opacity: .8;
+      }
+  </style>
+
+  </head>
+
+  <body class="nav-sm" ng-app="App" ng-controller="CrudCtrl">
+      <div class="loader_process" ng-show="loading"></div>
+
+  <div> 
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+                <a class="site_title"><i class="fa fa-bus"></i> <span>TransClick</span></a>
+              </div>
+              <div class="clearfix"></div>
+    
+              <!-- menu profile quick info -->
+              <div class="profile clearfix">
+                <div class="profile_pic">
+                  <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                </div>
+                <div class="profile_info">
+                  <span>Bienvenido:</span>
+                  <h2>{{infoUser.NAME}} {{infoUser.LAST_NAME}}</h2>
+                </div>
+              </div>
+              <!-- /menu profile quick info -->
+  
+              
+              <!-- sidebar menu -->            
+              
+              <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                <div class="menu_section">
+                  <h3>Usuario</h3>
+                   <div id="jqxMenu"></div>
+                </div>
+              </div>
+
+              <!-- /sidebar menu -->
+  
+              <!-- /menu footer buttons -->
+              <div class="sidebar-footer hidden-small">
+                <a data-toggle="tooltip" data-placement="top" title="Settings">
+                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                  <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="Lock">
+                  <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="Cerrar sesión" href="../login.html">
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                </a>
+              </div>
+              <!-- /menu footer buttons -->
+            </div>
+          </div>
+  
+       <!-- top navigation -->
+       <div class="top_nav">
+        <div class="nav_menu">
+          <nav>
+            <div class="nav toggle">
+              <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li class="">
+                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <img src="images/img.jpg" alt="">{{infoUser.NAME}} {{infoUser.LAST_NAME}}
+                  <span class=" fa fa-angle-down"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                  <!-- <li><a href="profile.html"> Perfil</a></li>
+                  <li>
+                    <a href="javascript:;">
+                      <span class="badge bg-red pull-right">50%</span>
+                      <span>Configuración</span>
+                    </a>
+                  </li>                     -->
+                  <li><a href="../login.html"><i class="fa fa-sign-out pull-right"></i> Cerrar sesión</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Mantenedor</h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>     
+
+            <form>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Usuarios <small>Mantenedor</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div> 
+                        
+                  <button id="addBtn" type="button" ng-click="exportExcel()" class="btn btn-sm btn-primary addnew pull-right">Excel <span class="glyphicon glyphicon-download-alt"></span></button>
+
+                  <div class="x_content">                                          
+                    <div class="table-responsive">
+                          <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap bulk_action" cellspacing="0" width="100%">
+                              <thead>
+                          <tr class="headings">                            
+                            <th class="column-title">  
+                              <select class="btn btn-xs btn-default" name="state" id="maxRows">
+                                  <option value="">All</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                              </select>  
+                            </th>                                                       
+                            <th class="column-title">PERFIL</th>
+                            <th class="column-title">NOMBRE</th>
+                            <th class="column-title">TIPO DOC.</th>
+                            <th class="column-title">N° DOC.</th>
+                            <th class="column-title">
+                              <span>
+                                <button id="addBtn" type="button" ng-click="clear()" class="btn btn-xs btn-primary addnew pull-left" data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-plus"></span></button>
+                                <button id="refreshBtn" type="button" class="btn btn-xs btn-default pull-left" ng-click="getData()"><span class="glyphicon glyphicon-refresh"></span></button>
+                                <button id="removeBtn" type="button" class="btn btn-xs btn-danger pull-left" ng-click="removeSelect()" style="visibility:hidden"><span class="glyphicon glyphicon-trash"></span></button>
+                              </span>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr class="even pointer" ng-repeat="data in JsonData">
+                            <td class="a-center ">
+                              <input type="checkbox" class="flat" name="table_records" ng-model="data.selected" onclick="enabledBtnDelete(this);">
+                            </td>
+                            <td>                             
+                              <select type="string" id="optProfile" class="form-control"  ng-model="data.id_perfil" ng-options= "item.id  as item.nombre for item in JsonProfile" ng-disabled="(data.id_perfil)>0">
+                              </select>
+                            </td>
+                            <td>
+                                <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.name" required/>
+                                <span ng-hide="data.editable">{{data.name}} {{data.last_name}}</span>
+                            </td>
+                            <td>                             
+                                <select type="string" id="optTypeDoc" class="form-control"  ng-model="data.id_doc_type" ng-options= "item.id  as item.document_desc for item in JsonDocType" ng-disabled="(data.id_doc_type)>0">
+                                </select>
+                              </td>
+                              <td>
+                                <input onkeyup="mayusc(this);" type="text" class="form-control" ng-show="data.editable" ng-model="data.num_document" required/>
+                                <span ng-hide="data.editable">{{data.num_document}}</span>
+                              </td>
+
+                            <td>
+                                <button type="button" ng-hide="data.editable" data-ng-click='getDataByUser($index)' class="btn btn-xs btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-edit" ></span></button>
+                                <button type="button" ng-click="save($index)" ng-show="data.editable" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></button>
+                                <button type="button" ng-click="delete($index)" ng-hide="data.editable" class="btn btn-xs btn-danger" ><span class="glyphicon glyphicon-trash"></span></button>
+                                <button type="button" ng-click="cancel($index)" ng-show="data.editable" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                              </td>
+                          </tr>                          
+                        </tbody>
+                      </table>
+                      <div class="pagination"></div>                      
+                    </div>							
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </form> 
+          </div>
+
+          <!-- Large modal -->
+          <div id="modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title" id="myModalLabel">Modificar usuarios</h4>
+                </div>
+                <div class="">
+                  <div class="x_content">
+                    <!-- Init SmartWizard Content -->
+                        <div class="x_content" >
+                          <br />
+                          <form class="form-horizontal form-label-left input_mask">
+                              <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                  <select id="optProfile" class="form-control"  ng-model="JsonDataUser.id_perfil" ng-options= "item.id  as item.nombre for item in JsonProfile">
+                                    </select>
+                                </div>
+
+                              <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                  <select  id="optTypeDoc" class="form-control"  ng-model="JsonDataUser.id_doc_type" ng-options= "item.id  as item.document_desc for item in JsonDocType">                                    
+                                  </select>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="inputSuccess3" placeholder="N° Documento" ng-model="entity.num_document">
+                                    <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                  </div>
+      
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                              <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nombre" ng-model="entity.name">
+                              <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+      
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                              <input type="text" class="form-control" id="inputSuccess3" placeholder="Apellido" ng-model="entity.last_name">
+                              <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+      
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                              <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" ng-model="entity.email">
+                              <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+      
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <select id="optSex" class="form-control" ng-model="entity.sex">
+                                    <option value="">SELECCIONE</option>
+                                    <option value="M">MASCULINO</option>
+                                    <option value="F">FEMENINO</option>
+                                  </select>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="date" class="form-control has-feedback-left" id="single_cal2" placeholder="Fecha Nacimiento"  ng-model="entity.dateString" >
+                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                              <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                  <input type="text" class="form-control" id="inputSuccess3" placeholder="Password" ng-model="entity.passwordDecrypt">
+                                  <span class="fa fa-key form-control-feedback right" aria-hidden="true"></span>
+                                </div>
+      
+                          </form>
+                        </div>
+                      </div>
+                    <!-- End SmartWizard Content -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" ng-click="save($JsonDataUser)">Guardar</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+            <!-- footer content -->
+            <footer>
+              <div class="pull-right">
+                  @TransClick <a href="#"></a>
+              </div>
+              <div class="clearfix"></div>
+          </footer>
+          <!-- /footer content -->
+      </div>
+    </div>
+  </div>
+      <!-- jQuery -->
+      <script src="../vendors/jquery/dist/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+      <!-- FastClick -->
+      <script src="../vendors/fastclick/lib/fastclick.js"></script>
+      <!-- NProgress -->
+      <script src="../vendors/nprogress/nprogress.js"></script>
+      <!-- iCheck -->
+      <script src="../vendors/iCheck/icheck.min.js"></script>
+
+      <!-- Custom Theme Scripts -->
+      <script src="../build/js/custom.min.js"></script>
+      <!-- Excel Scripts -->
+      <script src="../vendors/jquery.table2excel/excelexportjs.js"></script>
+      
+      <!-- Utils & Data -->
+      <script src="../build/js/servicesJS.js"></script>
+      <!-- Plugin JS -->
+      <script src="../build/js/mdb.min.js"></script>
+      <script src="../build/js/jquery.cookie.js"></script>
+      <script src="../build/js/utilJS.js"></script>
+      <script src="../vendors/angularJS/angular.min.js"></script>  
+      <script src="../vendors/toastr/toastr.min.js"></script>   
+      <script src="../controllers/main_userController.js"></script>
+      <script src="../vendors/pagination/paging.js"></script>
+      <!-- sidebar menu -->
+      <script src="../build/js/menu.js"></script> 
+
+      
+
+  </body>
+</html>

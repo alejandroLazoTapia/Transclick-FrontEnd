@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TransClick | Perfil </title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet" />
+        <!-- Plugin CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+</head>
+
+
+<body class="nav-sm" class="nav-md" ng-app="App" ng-controller="ProfileCtrl">
+        <div class="container body">
+          <div class="main_container">
+            <div class="col-md-3 left_col">
+              <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                  <a class="site_title"><i class="fa fa-bus"></i> <span>TransClick</span></a>
+                </div>
+    
+                <div class="clearfix"></div>
+    
+                <!-- menu profile quick info -->
+                <div class="profile clearfix">
+                  <div class="profile_pic">
+                    <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                  </div>
+                  <div class="profile_info">
+                    <span>Bienvenido:</span>
+                    <h2>{{infoProfile.name}} {{infoProfile.last_name}}</h2>
+                  </div>
+                </div>
+                <!-- /menu profile quick info -->
+    
+                
+                <!-- sidebar menu -->            
+                
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                  <div class="menu_section">
+                    <h3>Usuario</h3>
+                     <div id="jqxMenu"></div>
+                  </div>
+                </div>
+
+                <!-- /sidebar menu -->
+                
+                <!-- /menu footer buttons -->
+                <div class="sidebar-footer hidden-small">
+                    <a data-toggle="tooltip" data-placement="top" title="Settings">
+                      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                      <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="Lock">
+                      <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="Cerrar sesión" href="http://www.transclick.tk/">
+                      <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    </a>
+                  </div>
+                  <!-- /menu footer buttons -->
+              </div>
+            </div>
+    
+         <!-- top navigation -->
+         <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="images/img.jpg" alt="">{{infoProfile.name}} {{infoProfile.last_name}}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="javascript:;"> Perfil</a></li>
+                    <li>
+                      <a href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Configuración</span>
+                      </a>
+                    </li>                    
+                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Cerrar sesión</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+            <form>
+
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+                            <h3>Mi Perfil</h3>
+                        </div>
+
+                        <div class="title_right">
+                            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search for..." />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">Go!</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Usuario<small>Reporte de actividad</small></h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div>
+                                        <!-- start skills -->
+                                    <!-- top tiles -->
+                                    <div class="row tile_count">
+                                            <h4>Promedio últimos 3 meses</h4>
+                                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                            <span class="count_top"><i class="fa fa-money"></i> Pagos</span>
+                                            <div class="count blue">{{(PromedioPays/1000/3)| currency : '' : 0}}k</div>
+                                            <span class="count_bottom"><i id="colorPercentPays"><i id="percentPays"></i>{{porcentajePays}} </i> Mes anterior</span>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                                    <span class="count_top"><i class="fa fa-money"></i> Bonus</span>
+                                                    <div class="count blue">{{(PromedioBonus/1000)| currency : '' : 0}}k</div>
+                                                    <span class="count_bottom"><i id="colorPercentBonus"><i id="percentBonus"></i>{{porcentajeBonus}} </i> Mes anterior</span>
+                                                  </div> 
+                                        </div>
+                                        <!-- /top tiles -->
+
+                                    </div>
+                                    <div>
+                                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                                <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Información Personal</a>
+                                                </li>                                                                                              
+                                            </ul>
+                                            <div id="myTabContent" class="tab-content">
+                                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+
+                                                    <!-- start recent activity -->
+                                                    <ul class="messages">
+                                                        <li>
+                                                            <!-- <img src="images/img.jpg" class="avatar" alt="Avatar">-->
+                                                            <div class="message_date">
+                                                                <h3 class="date text-info">{{today | date :  "dd"}}</h3>
+                                                                <p class="month">{{today | date :  "MMM"}}</p>
+                                                            </div>
+                                                            <div class="message_wrapper">
+                                                                <blockquote class="message">Nombre: {{infoProfile.name}} {{infoProfile.last_name}} </blockquote>
+                                                                <blockquote class="message">Documento: {{infoProfile.num_document}} </blockquote>
+                                                                <blockquote class="message">Sexo: {{infoProfile.sex}}</blockquote>
+                                                                <blockquote class="message">Fecha Nacimiento: {{infoProfile.birth_date | date :  "dd-MM-y"}}</blockquote>
+                                                                <blockquote class="message">Email: {{infoProfile.email}}</blockquote>
+                                                                <br />
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- end recent activity -->
+
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                                    <ul class="messages">
+                                                        <li>
+                                                            <img src="images/img.jpg" class="avatar" alt="Avatar">
+                                                            <div class="message_date">
+                                                                <h3 class="date text-info">24</h3>
+                                                                <p class="month">May</p>
+                                                            </div>
+                                                            <div class="message_wrapper">
+                                                                <h4 class="heading">Nombre Usuario Aqui</h4>
+                                                                <blockquote class="message">Email: </blockquote>
+                                                                <blockquote class="message">Dirección: </blockquote>
+                                                                <br />
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                                <button id="btnEditProfile" ng-click="edit()" type="button" class="btn btn-success btn-group-justified" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-edit m-right-xs"></i> Actualizar datos</a></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+          <!-- Large modal -->
+          <div id="modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title" id="myModalLabel">Actualizar datos</h4>
+                </div>
+                <div class="">
+                  <div class="x_content">
+                    <!-- Init SmartWizard Content -->
+                        <div class="x_content" >
+                          <br />
+                          <form class="form-horizontal form-label-left input_mask">
+                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Nombre" ng-model="entity.name" data-inputmask="'mask' : ''">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                  </div>
+
+                                  <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Apellido" ng-model="entity.last_name" onkeyup="mayusc(this);">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                  </div>
+            
+                                  <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="date" class="form-control has-feedback-left" id="single_cal2" placeholder="Fecha Nacimiento"  ng-model="entity.dateString" >
+                                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" ng-model="entity.email">
+                                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                  </div>
+            
+    
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                              <input type="text" class="form-control has-feedback-left" id="txtPass" placeholder="Password" ng-model="entity.passwordDecrypt">
+                                  <span class="fa fa-key form-control-feedback left" aria-hidden="true"></span>
+                                </div>      
+                          </form>
+                        </div>
+                      </div>
+                    <!-- End SmartWizard Content -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" ng-click="save($entity)">Guardar</button>
+                </div>
+
+              </div>
+            </div>
+
+                </div>
+            </div>
+            </form>
+            <!-- /page content -->
+
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    @TransClick <a href="#"></a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+        <!-- Mask -->
+    <script src="../vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>    
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>  
+    <!-- Plugin JS -->
+    <script src="../build/js/mdb.min.js"></script>
+    <script src="../build/js/jquery.cookie.js"></script>
+    <script src="../vendors/angularJS/angular.min.js"></script>  
+    <script src="../vendors/toastr/toastr.min.js"></script>   
+    <!-- Utils & Data -->
+    <script src="../build/js/utilJS.js"></script>
+        <script src="../build/js/servicesJS.js"></script>
+    <!-- sidebar menu -->
+    <script src="../build/js/menu.js"></script> 
+
+    <script src="../controllers/profileController.js"></script>
+
+</body>
+</html>
