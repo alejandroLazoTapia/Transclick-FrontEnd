@@ -8,11 +8,6 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     var url_user = service_user +'/'+ arrayUrl.ID;
     var url_graphic = service_bonus + '?idUserGraphic=' + arrayUrl.ID; 
 
-    //obtener datos de usuario
-    var userReq = new XMLHttpRequest();
-    userReq.open("GET", url_user, false);
-    userReq.send(null);
-    var userJson = JSON.parse(userReq.responseText)[0]; //variable con datos de usuario
 
     // Obtener transacciones mediante método GET para tabla
     $scope.getData = function() 
@@ -40,26 +35,24 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     $scope.getData();
     
 
-          var xhReq = new XMLHttpRequest();
-          xhReq.open("GET", url_graphic, false);
-          xhReq.send(null);
-          var da = JSON.parse(xhReq.responseText); 
-          //console.log(da);
-          var dat = [];
-          var mesAno = [];
+    var xhReq = new XMLHttpRequest();
+    xhReq.open("GET", url_graphic, false);
+    xhReq.send(null);    
+    if(xhReq.status != 204){
+    var da = JSON.parse(xhReq.responseText); 
+    var dat = [];
+    var mesAno = [];
 
-          for (i = 0; i < da.length; i++) {
-            var me= new Array(da[i].ano+' - '+da[i].mes);
-            mesAno.push(me);
+        for (i = 0; i < da.length; i++) {
+        var me= new Array(da[i].ano+' - '+da[i].mes);
+        mesAno.push(me);
 
-            var serie = new Array(da[i].mes, da[i].monto);
-            //console.log(serie);
-            dat.push(serie);
-            //console.log(dat);
-          }
-        
-          
-             
+        var serie = new Array(da[i].mes, da[i].monto);
+        //console.log(serie);
+        dat.push(serie);
+        //console.log(dat);
+        }
+    }                       
 
      $(function($){
             $('#grafico').highcharts({
@@ -94,7 +87,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
             tooltip: {
                 headerFormat: '<span style="font-size:12px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">'+userJson.name+' '+userJson.last_name+': </td></tr>' +
+                pointFormat: '<tr><td style="color:{series.color};padding:0">'+arrayUrl.NAME+' '+arrayUrl.LAST_NAME+': </td></tr>' +
                     '<td style="padding:0"><b>Total: ${point.y:.0f}</b></td></tr>',
 
                 footerFormat: '</table>',
@@ -115,7 +108,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             series: 
             [{
                 type: 'pie',
-                name: userJson.name+' '+userJson.last_name,
+                name: arrayUrl.NAME+' '+arrayUrl.LAST_NAME,
                 data: dat
                }
             ]     

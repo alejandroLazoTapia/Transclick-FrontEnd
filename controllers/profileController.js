@@ -231,7 +231,12 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
         var obj =[];
         obj.status = true;
         obj.message = "";
+        var now = new Date();
+        var nowBirth = new Date($('#birthdate').val());        
         
+        console.log(now);
+        console.log(nowBirth);
+
         if ($('#txtname').val() == ''){
             obj.status = false;
             obj.message = "Ingrese nombre.";
@@ -241,12 +246,15 @@ angular.module('App', []).controller('ProfileCtrl',function($scope, $http, $wind
         }else if($('#birthdate').val()  == ''){
             obj.status = false;
             obj.message = "Ingrese fecha de nacimiento.";        
+        }else if(nowBirth  > now){
+            obj.status = false;
+            obj.message = "Fecha de nacimiento futura inválida.";        
         }else if(!IsEmail($('#txtemail').val())){
             obj.status = false;
             obj.message = "Email inválido.";
-        }else if($('#txtpass').val()  == ''){
+        }else if($('#password').val()  == ''){
             obj.status = false;
-            obj.message = "Ingrese password.";
+            obj.message = "Ingrese contraseña.";
         }
             return obj;
         };      

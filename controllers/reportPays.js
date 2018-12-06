@@ -5,17 +5,8 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     //Se utiliza para desplegar info del usuario
     $scope.infoUser = arrayUrl;
 
-    var url_user = service_user +'/'+ arrayUrl.ID;
     var url_table = service_PaymentDocument + '?idUser=' + arrayUrl.ID; 
-
     var url_graphic = service_PaymentDocument + '?idUserGraphic=' + arrayUrl.ID; 
-
-    //obtener datos de usuario
-    var userReq = new XMLHttpRequest();
-    userReq.open("GET", url_user, false);
-    userReq.send(null);
-    var userJson = JSON.parse(userReq.responseText)[0]; //variable con datos de usuario
-
 
     // Obtener transacciones mediante método GET para tabla
     $scope.getData = function() 
@@ -24,16 +15,16 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         $http.get(url_table)
         .then(function(response){
             if(response.status == 204){
-                toastr.info("No posee transacciones registradas");
+                toastr.info("No posee pagos registrados");
                 $scope.JsonData = response.data;
-
             }else{
                 $scope.JsonData = response.data;
-                getPagination('#datatable-responsive');                
+                getPagination('#datatable-responsive');               
             }           
         }, function (error) {
-            toastr.error("El Usuario Ingresado No Posee Pagos registrados");
-            console.log(error);
+            $scope.loading = false;
+            toastr.error("El usuario no posee pagos registrados");
+            //console.log(error);
         }).finally(function() {
             // called no matter success or failure
             $scope.loading = false;
@@ -53,23 +44,26 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
           }
     
 
-          var xhReq = new XMLHttpRequest();
-          xhReq.open("GET", url_graphic, false);
-          xhReq.send(null);
-          var da = JSON.parse(xhReq.responseText); ""
-          //console.log(da);
-          var dat = [];
-          var mesAno = [];
+    var xhReq = new XMLHttpRequest();
+    xhReq.open("GET", url_graphic, false);
+    xhReq.send(null);
+    //Valido si retorna registros  
+    if(xhReq.status != 404){
+    var da = JSON.parse(xhReq.responseText);
+    //console.log(da);
+    var dat = [];
+    var mesAno = [];
 
-          for (i = 0; i < da.length; i++) {
-            var me= new Array(da[i].ano+' - '+da[i].mes);
-            mesAno.push(me);
+        for (i = 0; i < da.length; i++) {
+        var me= new Array(da[i].ano+' - '+da[i].mes);
+        mesAno.push(me);
 
-            var serie = new Array(da[i].mes+'<br>ESTADO BOLETA: '+da[i].estado_boleta, da[i].total_mes);
-            //console.log(serie);
-            dat.push(serie);
-            //console.log(dat);
-          }
+        var serie = new Array(da[i].mes+'<br>ESTADO BOLETA: '+da[i].estado_boleta, da[i].total_mes);
+        //console.log(serie);
+        dat.push(serie);
+        //console.log(dat);
+        }
+    }
         
           
              
@@ -99,7 +93,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
             tooltip: {
                 headerFormat: '<span style="font-size:12px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">'+userJson.name+' '+userJson.last_name+': </td></tr>' +
+                pointFormat: '<tr><td style="color:{series.color};padding:0">'+arrayUrl.NAME+' '+arrayUrl.LAST_NAME+': </td></tr>' +
                     '<td style="padding:0"><b>Total: ${point.y:.0f}</b></td></tr>',
 
                 footerFormat: '</table>',
@@ -115,7 +109,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             series: 
             [{
                 type: 'column',
-                name: userJson.name+' '+userJson.last_name,
+                name: arrayUrl.NAME+' '+arrayUrl.LAST_NAME,
                 data: dat
                }
             ]     

@@ -59,8 +59,8 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
                 $scope.clear();
             }           
         }, function (error) {
-            toastr.error("Ocurrió un error al intentar leer el registro");
-            console.log(error);
+            toastr.error("No posee registros de formularios");
+            //console.log(error);
         }).finally(function() {
             // called no matter success or failure
             $scope.loading = false;

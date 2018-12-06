@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TransClick | Perfil </title>
 
+    <!-- Icons -->
+    <link rel="stylesheet" href="css/materialdesignicons.min.css">
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
@@ -125,19 +127,8 @@
             <div class="right_col" role="main">
                 <div class="">
                     <div class="page-title">
-                        <div class="title_left">
+                         <div class="title_left">
                             <h3>Mi Perfil</h3>
-                        </div>
-
-                        <div class="title_right">
-                            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search for..." />
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">Go!</button>
-                                    </span>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -146,10 +137,6 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>Usuario<small>Reporte de actividad</small></h2>
-                                    <div class="clearfix"></div>
-                                </div>
                                 <div class="x_content">
                                     <div>
                                         <!-- start skills -->
@@ -158,12 +145,12 @@
                                             <h4>Promedio últimos 3 meses</h4>
                                             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                                             <span class="count_top"><i class="fa fa-money"></i> Pagos</span>
-                                            <div class="count blue">{{(PromedioPays/1000/3)| currency : '' : 0}}k</div>
+                                            <div class="count blue">${{(PromedioPays/3)| currency : '' : 0}}</div>
                                             <span class="count_bottom"><i id="colorPercentPays"><i id="percentPays"></i>{{porcentajePays}} </i> Mes anterior</span>
                                             </div>
                                             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                                                     <span class="count_top"><i class="fa fa-money"></i> Bonus</span>
-                                                    <div class="count blue">{{(PromedioBonus/1000)| currency : '' : 0}}k</div>
+                                                    <div class="count blue">${{(PromedioBonus)| currency : '' : 0}}</div>
                                                     <span class="count_bottom"><i id="colorPercentBonus"><i id="percentBonus"></i>{{porcentajeBonus}} </i> Mes anterior</span>
                                                   </div> 
                                         </div>
@@ -246,12 +233,12 @@
                           <br />
                           <form class="form-horizontal form-label-left input_mask">
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input id="txtname" type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Nombre" ng-model="entity.name" data-inputmask="'mask' : ''">
+                                    <input id="txtname" type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Nombre" ng-model="entity.name" data-inputmask="'mask' : ''" maxlength="15">
                                     <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                   </div>
 
                                   <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input id="txtlastname" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Apellido" ng-model="entity.last_name" onkeyup="mayusc(this);">
+                                    <input id="txtlastname" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Apellido" ng-model="entity.last_name" onkeyup="mayusc(this);" maxlength="15">
                                     <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                   </div>
             
@@ -260,15 +247,22 @@
                                     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input id="txtemail" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" ng-model="entity.email">
+                                    <input id="txtemail" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" ng-model="entity.email" maxlength="30">
                                     <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                                   </div>
             
-    
-                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                              <input id="txtpass" type="text" class="form-control has-feedback-left" id="txtPass" placeholder="Password" ng-model="entity.passwordDecrypt">
-                                  <span class="fa fa-key form-control-feedback left" aria-hidden="true"></span>
-                                </div>      
+                                <div>
+                                <div class="col-md-5 col-sm-5 col-xs-10">
+                                    <input id="password" type="password" class="form-control has-feedback-left" id="txtPass" placeholder="Password" ng-model="entity.passwordDecrypt" maxlength="15">
+                                    <span class="mdi mdi-key form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+                                    <span>
+                                            <button id= "show_password" class="btn btn-secondary btn-sm" type="button">
+                                            <span class="mdi mdi-eye"></span>
+                                    </button>
+                                    </span>
+                                </div> 
+
                           </form>
                         </div>
                       </div>
@@ -322,6 +316,5 @@
     <script src="../build/js/menu.js"></script> 
 
     <script src="../controllers/profileController.js"></script>
-
 </body>
 </html>

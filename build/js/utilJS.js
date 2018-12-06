@@ -196,3 +196,20 @@ function isMobile() {
     }
 
 })(window);   
+
+$("#show_password").hover(
+    function functionName() {
+      //Change the attribute to text
+      $("#password").attr("type", "text");
+      $(".mdi")
+        .removeClass("mdi-eye")
+        .addClass("mdi-eye-off");
+    },
+    function() {
+      //Change the attribute back to password
+      $("#password").attr("type", "password");
+      $(".mdi")
+        .removeClass("mdi-eye-off")
+        .addClass("mdi-eye");
+    }
+  );

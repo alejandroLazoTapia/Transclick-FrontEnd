@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>TransClick | Medios pago </title>
-
+    <!-- Icons -->
+    <link rel="stylesheet" href="css/materialdesignicons.min.css">
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -193,30 +194,37 @@
                           <form id="form-claims" class="form-horizontal form-label-left input_mask">
 
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input type="text" class="form-control has-feedback-left" id="txtcardnumber" placeholder="N° Tarjeta" ng-model="JsonCard.card_number" data-inputmask="'mask' : '****-****-****-****'" required="required">
+                                    <input type="text" class="form-control has-feedback-left" id="txtcardnumber" placeholder="N° Tarjeta" ng-model="JsonCard.card_number" data-inputmask="'mask' : '9999-9999-9999-9999'" required="required" maxlength="19">
                                     <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                   </div>
             
                                   <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input type="month" class="form-control has-feedback-left" id="datexpiration" placeholder="Mes Vencimiento" ng-model="JsonCard.expiration" min="0" max="12" required>
+                                    <input type="month" class="form-control has-feedback-left" id="datexpiration" placeholder="Mes Vencimiento" ng-model="JsonCard.expiration" required maxlength="12" >
                                     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 </div>
 
                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                              <input type="text" class="form-control has-feedback-left" id="txtname" placeholder="Nombre" ng-model="JsonCard.name" onkeyup="mayusc(this);">
+                              <input type="text" class="form-control has-feedback-left" id="txtname" placeholder="Nombre" ng-model="JsonCard.name" onkeyup="mayusc(this);" maxlength="15" >
                               <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                             </div>
       
                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                              <input type="text" class="form-control" id="txtlastname" placeholder="Apellido" ng-model="JsonCard.last_name" onkeyup="mayusc(this);">
-                              <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                              <input type="text" class="form-control has-feedback-left" id="txtlastname" placeholder="Apellido" ng-model="JsonCard.last_name" onkeyup="mayusc(this);" maxlength="15" >
+                              <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                             </div>                                
 
-
-                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                              <input type="number" class="form-control has-feedback-left" id="txtcode" placeholder="Código de seguridad" ng-model="JsonCard.secure_code">
-                                  <span class="fa fa-key form-control-feedback left" aria-hidden="true"></span>
-                                </div>
+                          <div>
+                            <div class="col-md-5 col-sm-5 col-xs-10">
+                                <input type="password" class="form-control has-feedback-left" id="password" placeholder="Código de seguridad" ng-model="JsonCard.secure_code" maxlength="3" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" >
+                                <span class="mdi mdi-key form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+                                <span>
+                                        <button id= "show_password" class="btn btn-secondary btn-sm" type="button">
+                                        <span class="mdi mdi-eye"></span>
+                                </button>
+                                </span>
+                            </div> 
+                                
                           </form>
                         </div>
                       </div>

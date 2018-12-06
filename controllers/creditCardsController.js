@@ -209,6 +209,11 @@ angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $
         obj.status = true;
         obj.message = "";
         
+        var now = new Date();    
+        var nowCard = new Date($('#datexpiration').val());                
+        //console.log(now);
+        //console.log(nowCard);
+        
         if ($('#txtcardnumber').val() == ''){
             obj.status = false;
             obj.message = "Ingrese Nº tarjeta.";
@@ -221,7 +226,7 @@ angular.module('App', []).controller('CreditCardsCtrl',function($scope, $http, $
         }else if($('#txtlastname').val() == ''){
             obj.status = false;
             obj.message = "Ingrese apellido.";
-        }else if($('#txtcode').val()  == ''){
+        }else if($('#password').val()  == ''){
             obj.status = false;
             obj.message = "Ingrese código de seguridad.";
         }

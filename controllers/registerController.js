@@ -7,6 +7,14 @@ obj.message = "";
 var fullname = $('#name').val();
 var nameArray = fullname.split(' ');
 
+var now = new Date();
+var nowBirth = new Date($('#birthdate').val());        
+
+//console.log(now);
+//console.log(nowBirth);
+var edad =getAge(nowBirth);
+
+
 if ($('#typeDocument').val() == ''){
   obj.status = false;
   obj.message = "Debe seleccionar tipo documento.";
@@ -31,6 +39,12 @@ if ($('#typeDocument').val() == ''){
 }else if($('#birthdate').val()  == ''){
   obj.status = false;
   obj.message = "Debe ingresar fecha de nacimiento.";
+}else if(nowBirth  > now){
+  obj.status = false;
+  obj.message = "Fecha de nacimiento futura inválida.";        
+}else if(edad < 18){
+  obj.status = false;
+  obj.message = "Debe ser mayor de edad.";        
 }else if($('#password').val()  == ''){
   obj.status = false;
   obj.message = "Debe ingresar password.";
@@ -40,6 +54,17 @@ if ($('#typeDocument').val() == ''){
 }
 return obj;
 } 
+
+function getAge(dateString) {
+  var today = new Date();
+  var birthDate = new Date(dateString);
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+  }
+  return age;
+};
 
 
 var app = angular.module('MyApp', []);

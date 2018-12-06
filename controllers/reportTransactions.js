@@ -9,10 +9,10 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     var url_graphic= service_consumption + '?idUserGraphic=' + arrayUrl.ID; 
 
     //obtener datos de usuario
-    var userReq = new XMLHttpRequest();
-    userReq.open("GET", url_user, false);
-    userReq.send(null);
-    var userJson = JSON.parse(userReq.responseText)[0]; //variable con datos de usuario
+    // var userReq = new XMLHttpRequest();
+    // userReq.open("GET", url_user, false);
+    // userReq.send(null);
+    // var userJson = JSON.parse(userReq.responseText)[0]; 
 
     // Obtener transacciones mediante método GET
     $scope.getData = function() 
@@ -23,10 +23,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             if(response.status == 204){
                 toastr.info("No posee transacciones registradas");
                 $scope.JsonData = response.data;
-
             }else{
                 $scope.JsonData = response.data;
-                getPagination('#datatable-responsive');                
+                getPagination('#datatable-responsive');               
             }           
         }, function (error) {
             toastr.error("Usuario no posee transacciones.");
@@ -52,16 +51,18 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     };
     
 
-          var xhReq = new XMLHttpRequest();
-          xhReq.open("GET", url_graphic, false);
-          xhReq.send(null);
-          var da = JSON.parse(xhReq.responseText);
-          //console.log(da);
-          var dat = [];
-          var mesAno = [];
-          var cant_trx=[];
-
-          for (i = 0; i < da.length; i++) {
+    var xhReq = new XMLHttpRequest();
+    xhReq.open("GET", url_graphic, false);
+    xhReq.send(null);
+    //Valido si retorna registros    
+    if(xhReq.status != 204){
+    var da = JSON.parse(xhReq.responseText);
+    console.log(da);
+    //console.log(da);
+    var dat = [];
+    var mesAno = [];
+    var cant_trx=[];
+        for (i = 0; i < da.length; i++) {
             var me= new Array(da[i].ano+" - "+da[i].mes);
             mesAno.push(me);
 
@@ -72,8 +73,9 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             //console.log(serie);
             dat.push(serie);
             //console.log(dat);
-          }
-        
+        }
+    }
+
           
              
 
@@ -102,7 +104,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
             tooltip: {
                 headerFormat: '<span style="font-size:12px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">'+userJson.name+' '+userJson.last_name+': </td></tr>' +
+                pointFormat: '<tr><td style="color:{series.color};padding:0">'+arrayUrl.NAME+' '+arrayUrl.LAST_NAME+': </td></tr>' +
                     '<td style="padding:0"><b>Total: ${point.y:.0f}</b></td></tr>',
 
                 footerFormat: '</table>',
@@ -118,7 +120,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             series: 
             [{
                 type: 'column',
-                name: userJson.name+' '+userJson.last_name,
+                name: arrayUrl.NAME+' '+arrayUrl.LAST_NAME,
                 data: dat
                }
             ]     

@@ -7,14 +7,22 @@
   <link rel="shortcut icon" href="images/favicon.png" />
   <title>TransClick | Login</title>
   <!-- CSS Style -->
+  
+
   <link rel="stylesheet" href="view_user/css/materialdesignicons.min.css">
+
+
   <link rel="stylesheet" href="view_user/css/style.css">
+  <!-- <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">  -->
+
   <link rel="stylesheet" href="view_user/css/mdb.min.css">  
+
   <link rel="stylesheet" href="view_user/css/custom.css">
 
   <!-- Plugin CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script src='https://www.google.com/recaptcha/api.js?hl=es'></script> 
+
   <style>
     .loader_process {
       position: fixed;
@@ -30,6 +38,7 @@
 </head>
 
 <body id="login" ng-app="MyApp" ng-controller="Login">
+
   <div class="loader_process" ng-show="loading"></div>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper">
@@ -38,17 +47,23 @@
           <div class="card col-lg-4 mx-auto">
             <div class="card-body px-5 py-5">
               <div class="text-center">
-                <img src="view_user/images/login/title.png" class="logo" alt="Logo">
+                <img src="view_user/images/login/title.jpg"  class="logo" alt="Logo">
               </div>
               <form  name="login">
                 <div class="md-form">
-                  <input ng-model="email" type="text" id="email" class="form-control" />
-                  <label for="email">👨‍💻 Email *</label>
+                  <input ng-model="email" type="text" id="email" class="form-control" maxlength="30" />
+                  <label for="email">👨‍ Email *</label>
                 </div>
-                <div class="md-form">
-                  <input ng-model="password" type="password" id="password" class="form-control">
-                  <label for="password">🔑 Contraseña *</label>
-                </div>
+
+                <div class="input-group">
+                    <input ng-model="password" id="password" type="password" class="form-control" placeholder="Contraseña" maxlength="15">
+                    <span class="">
+                          <button id= "show_password" class="btn btn-secondary btn-sm" type="button">
+                          <span class="mdi mdi-eye"></span>
+                    </button>
+                    </span>
+                  </div>
+
                   <div class="md-form">                  
                     <div style="transform: scale(0.84);transform-origin: 0 0;"  class="g-recaptcha" data-sitekey="6LcKu3MUAAAAAL9yDyzrjhcdNQSDydQDl9U_gbB3"  data-callback="recaptcha_callback"></div>
                     <!-- <div style="transform: scale(0.84);transform-origin: 0 0;"  class="g-recaptcha" data-sitekey="6LfK1HoUAAAAAKOqOX1LKqXF0vkHOIUjiUlbBMnF"  data-callback="recaptcha_callback"></div> -->
@@ -66,11 +81,6 @@
   </div>
 
 
-  <!-- Utils & Data -->
-  <script src="build/js/utilJS.js"></script>
-  <script src="build/js/servicesJS.js"></script>
-
-
   <!-- Plugin JS -->
   <script src="vendors/jquery/dist/jquery.min.js"></script>
   <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -78,10 +88,13 @@
   <script src="build/js/jquery.cookie.js"></script>
   <script src="vendors/angularJS/angular.min.js"></script>  
   <script src="vendors/toastr/toastr.min.js"></script>  
+
+  <!-- Utils & Data -->
+  <script src="build/js/utilJS.js"></script>
+  <script src="build/js/servicesJS.js"></script>
   <script src="controllers/loginController.js"></script>
 
   <script>
-
     function recaptcha_callback(){ 
           
       var IngresoBtn = document.querySelector("#ingreso-btn");
