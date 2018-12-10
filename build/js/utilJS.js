@@ -197,19 +197,83 @@ function isMobile() {
 
 })(window);   
 
-$("#show_password").hover(
-    function functionName() {
-      //Change the attribute to text
-      $("#password").attr("type", "text");
-      $(".mdi")
+
+//Yoy can visible password on actions  
+      $("#show_password").hover(
+           function functionName() {
+              $("#password").attr("type", "text");
+              $(".mdi")
+              .removeClass("mdi-eye")
+                  .addClass("mdi-eye-off");
+          },
+          function() {
+              $("#password").attr("type", "password");
+              $(".mdi")
+                  .removeClass("mdi-eye-off")
+                  .addClass("mdi-eye");
+          }
+      );
+
+     $("#show_password").click(function() {
+        var input = $("#password");
+        if (input.attr("type") == "password") {
+          input.attr("type", "text");
+        $(".mdi")
         .removeClass("mdi-eye")
         .addClass("mdi-eye-off");
-    },
-    function() {
-      //Change the attribute back to password
-      $("#password").attr("type", "password");
-      $(".mdi")
-        .removeClass("mdi-eye-off")
-        .addClass("mdi-eye");
-    }
-  );
+        } else {
+          input.attr("type", "password");
+          $(".mdi")
+          .removeClass("mdi-eye-off")
+          .addClass("mdi-eye");
+        }
+      });
+
+      function soloLetras(e){
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz,.";
+        especiales = "8-37-39-46";
+ 
+        tecla_especial = false
+        for(var i in especiales){
+             if(key == especiales[i]){
+                 tecla_especial = true;
+                 break;
+             }
+         }
+ 
+         if(letras.indexOf(tecla)==-1 && !tecla_especial){
+             return false;
+         }
+     };      
+
+
+     function init_contadorTa(idtextarea, idcontador,max)
+     {
+         $("#"+idtextarea).keyup(function()
+                 {
+                     updateContadorTa(idtextarea, idcontador,max);
+                 });
+         
+         $("#"+idtextarea).change(function()
+         {
+                 updateContadorTa(idtextarea, idcontador,max);
+         });
+         
+     }
+     
+     function updateContadorTa(idtextarea, idcontador,max)
+     {
+         var contador = $("#"+idcontador);
+         var ta =     $("#"+idtextarea);
+         contador.html("0/"+max);
+         
+         contador.html(ta.val().length+"/"+max);
+         if(parseInt(ta.val().length)>max)
+         {
+             ta.val(ta.val().substring(0,max-1));
+             contador.html(max+"/"+max);
+         }
+     
+     }     

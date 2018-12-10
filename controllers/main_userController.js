@@ -59,7 +59,6 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             $scope.getProfile();
             $scope.getDocumentType();            
             $scope.JsonData = response.data;
-            console.log(service_user)
             //$scope.JsonData.password = $window.atob(response.data.password.toString());
             getPagination('#datatable-responsive');
             //console.log(response.data);
@@ -100,7 +99,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         $scope.entity.passwordDecrypt = decrypt(pass);   
 
         var birth = $scope.entity.birth_date;
-        console.log(birth);
+        //console.log(birth);
         $scope.entity.dateString = new Date(birth);
 
         var url = service_user + '/' + $scope.entity.id; 
@@ -135,14 +134,14 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
         $scope.entity.passwordDecrypt = decrypt(pass);   
 
         var birth = $scope.entity.birth_date;
-        console.log(birth);
+        //console.log(birth);
         $scope.entity.dateString = new Date(birth);
 
 
         $scope.entity.index = index;
         $scope.entity.editable = true;     
         $scope.entity.disabled = false; 
-        console.log($scope.entity);
+    
 	 }
    
     
@@ -172,7 +171,7 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
      
      
     //Función para insertar o modificar registros
-     $scope.save = function(entity)
+     $scope.save = function(JsonDataUser)
         {
             $scope.entity = $scope.entity;            
             var password = $scope.entity.passwordDecrypt;
@@ -185,8 +184,6 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
             if (datos.id == ''){
                 datos.id= 0;
             }
-
-            //console.log(datos);
 
             if($scope.entity.id_doc_type != undefined){
                 if($scope.entity.sex != undefined){

@@ -39,15 +39,11 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
 
     $scope.exportExcel = function()
     { 
-        console.log("exportando")
-        // window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#tblConsumptions').html()));     
-        $("#datatable-responsive").table2excel({
-            exclude: ".noExl",
-            name: "Consumptions",
-            filename: "Consumptions"
-
-        });
-
+         $("#datatable-responsive").table2excel({
+             exclude: ".noExl",
+             name: "consumptions",
+             filename: "Consumptions",
+         });
     };
     
 
@@ -57,7 +53,6 @@ angular.module('App', []).controller('CrudCtrl',function($scope, $http, $window)
     //Valido si retorna registros    
     if(xhReq.status != 204){
     var da = JSON.parse(xhReq.responseText);
-    console.log(da);
     //console.log(da);
     var dat = [];
     var mesAno = [];

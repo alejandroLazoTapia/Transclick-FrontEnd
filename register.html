@@ -67,11 +67,11 @@
                                     <label for="numberDocument">🔢 N° Documento *</label>
                                 </div>
                                 <div class="md-form">
-                                    <input ng-model="name" type="text" id="name" class="form-control" onkeyup="mayusc(this);" maxlength="35" >
+                                    <input ng-model="name" type="text" id="name" class="form-control" onkeyup="mayusc(this);" maxlength="15" >
                                     <label for="name">👨‍💻 Nombre y Apellido *</label>
                                 </div>
                                 <div class="md-form">
-                                    <input ng-model="email" type="text" id="email" class="form-control" onkeyup="mayusc(this);" maxlength="30" >
+                                    <input ng-model="email" type="text" id="email" class="form-control" onkeyup="mayusc(this);" maxlength="50" >
                                     <label for="email">📧 Email *</label>
                                 </div>
                                 <div class="md-form">
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="md-form">
                                         <div class="input-group">
-                                                <input ng-model="password" id="password" type="password" class="form-control" placeholder="Contraseña" maxlength="15">
+                                                <input ng-model="password" id="password" type="password" class="form-control" placeholder="Contraseña" maxlength="15" onkeyup="mayusc(this);">
                                                 <span class="">
                                                       <button id= "show_password" class="btn btn-secondary btn-sm" type="button">
                                                       <span class="mdi mdi-eye"></span>

@@ -52,7 +52,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                   <div class="profile_pic">
-                    <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                    <img src="images/img.png" alt="..." class="img-circle profile_img">
                   </div>
                   <div class="profile_info">
                     <span>Bienvenido:</span>
@@ -73,22 +73,22 @@
 
                 <!-- /sidebar menu -->
     
-                <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                  <a data-toggle="tooltip" data-placement="top" title="Settings">
-                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                  </a>
-                  <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                    <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                  </a>
-                  <a data-toggle="tooltip" data-placement="top" title="Lock">
-                    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                  </a>
-                  <a data-toggle="tooltip" data-placement="top" title="Cerrar sesión" href="../login.html">
-                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                  </a>
-                </div>
-                <!-- /menu footer buttons -->
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+                    <a data-toggle="tooltip" data-placement="top" title="Settings">
+                      <!-- <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                      <!-- <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> -->
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="Lock">
+                      <!-- <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> -->
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="../login.html">
+                      <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    </a>
+                  </div>
+                  <!-- /menu footer buttons -->
               </div>
             </div>
     
@@ -103,7 +103,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">{{infoProfile.name}} {{infoProfile.last_name}}
+                    <img src="images/img.png" alt="">{{infoProfile.name}} {{infoProfile.last_name}}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -149,7 +149,7 @@
                                             <span class="count_bottom"><i id="colorPercentPays"><i id="percentPays"></i>{{porcentajePays}} </i> Mes anterior</span>
                                             </div>
                                             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-                                                    <span class="count_top"><i class="fa fa-money"></i> Bonus</span>
+                                                    <span class="count_top"><i class="fa fa-money"></i> Descuentos</span>
                                                     <div class="count blue">${{(PromedioBonus)| currency : '' : 0}}</div>
                                                     <span class="count_bottom"><i id="colorPercentBonus"><i id="percentBonus"></i>{{porcentajeBonus}} </i> Mes anterior</span>
                                                   </div> 
@@ -233,12 +233,12 @@
                           <br />
                           <form class="form-horizontal form-label-left input_mask">
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input id="txtname" type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Nombre" ng-model="entity.name" data-inputmask="'mask' : ''" maxlength="15">
+                                    <input id="txtname" type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Nombre" ng-model="entity.name" data-inputmask="'mask' : ''" maxlength="15" onkeyup="mayusc(this);">
                                     <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                   </div>
 
                                   <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input id="txtlastname" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Apellido" ng-model="entity.last_name" onkeyup="mayusc(this);" maxlength="15">
+                                    <input id="txtlastname" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Apellido" ng-model="entity.last_name" onkeyup="mayusc(this);" maxlength="15" onkeyup="mayusc(this);">
                                     <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                   </div>
             
@@ -247,13 +247,13 @@
                                     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input id="txtemail" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" ng-model="entity.email" maxlength="30">
+                                    <input id="txtemail" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" ng-model="entity.email" maxlength="50" onkeyup="mayusc(this);">
                                     <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                                   </div>
             
                                 <div>
                                 <div class="col-md-5 col-sm-5 col-xs-10">
-                                    <input id="password" type="password" class="form-control has-feedback-left" id="txtPass" placeholder="Password" ng-model="entity.passwordDecrypt" maxlength="15">
+                                    <input id="password" type="password" class="form-control has-feedback-left" id="txtPass" placeholder="Password" ng-model="entity.passwordDecrypt" maxlength="15" onkeyup="mayusc(this);">
                                     <span class="mdi mdi-key form-control-feedback left" aria-hidden="true"></span>
                                 </div>
                                     <span>

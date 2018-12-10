@@ -98,7 +98,9 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
                     $http.post(url,datos,config)      
                     .then(function (response) {
                         $scope.getData();
+                        $(".buttonPrevious").click();
                         toastr.success('Formulario generado exitosamente');
+
                         //console.log(response);
     
                     }, function (error) {
@@ -109,6 +111,7 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
                         $scope.loading = false;
                     });              
             }else{
+                $(".buttonPrevious").click();
                 toastr.warning("Debe seleccionar motivo");    
             }        
         }else{
@@ -130,13 +133,20 @@ angular.module('App', []).controller('ClaimsCtrl',function($scope, $http, $windo
 
         if ($("select[name=optReasons]").val() == 'SELECCIONE'){
             obj.status = false;
-            obj.message = "Seleccione motivo.";            
+            obj.message = "Seleccione motivo.";   
+            $(".buttonPrevious").click();
         }else if($('#txtcellphone').val()  == ''){
             obj.status = false;
             obj.message = "Ingrese Nº de contacto.";
+            $(".buttonPrevious").click();
         }else if($('#txtmessage').val()  == ''){
             obj.status = false;
-            obj.message = "Ingrese comentario.";        
+            obj.message = "Ingrese comentario."; 
+            $(".buttonNext").click();       
+        }else if($('#txtmessage').val().length  <= 20){
+            obj.status = false;
+            obj.message = "Debe especificar su problema."; 
+            $(".buttonNext").click();       
         }
             return obj;
         };      

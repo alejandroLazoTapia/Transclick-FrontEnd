@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Mantenedor usuarios | </title>
-
+    <!-- Icons -->
+    <link rel="stylesheet" href="css/materialdesignicons.min.css">
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -133,17 +134,6 @@
               <div class="title_left">
                 <h3>Mantenedor</h3>
               </div>
-
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>     
 
             <form>
@@ -251,32 +241,34 @@
                           <br />
                           <form class="form-horizontal form-label-left input_mask">
                               <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                  <select id="optProfile" class="form-control"  ng-model="JsonDataUser.id_perfil" ng-options= "item.id  as item.nombre for item in JsonProfile">
-                                    </select>
+                                  <select id="optProfile" class="form-control"  ng-model="entity.id_perfil" ng-options= "item.id  as item.nombre for item in JsonProfile">
+                                    <option value="" selected>SELECCIONE</option>  
+                                  </select>
                                 </div>
 
                               <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                  <select  id="optTypeDoc" class="form-control"  ng-model="JsonDataUser.id_doc_type" ng-options= "item.id  as item.document_desc for item in JsonDocType">                                    
+                                  <select  id="optTypeDoc" class="form-control"  ng-model="entity.id_doc_type" ng-options= "item.id  as item.document_desc for item in JsonDocType">                                    
+                                    <option value="" selected>SELECCIONE</option>
                                   </select>
                                 </div>
 
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    <input type="text" class="form-control" id="inputSuccess3" placeholder="N° Documento" ng-model="entity.num_document">
-                                    <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="N° Documento" ng-model="entity.num_document" maxlength="12">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                   </div>
       
                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                              <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nombre" ng-model="entity.name">
+                              <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nombre" ng-model="entity.name" maxlength="15">
                               <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                             </div>
       
                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                              <input type="text" class="form-control" id="inputSuccess3" placeholder="Apellido" ng-model="entity.last_name">
-                              <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                              <input type="text" class="form-control has-feedback-left" id="inputSuccess3" placeholder="Apellido" ng-model="entity.last_name" maxlength="15">
+                              <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                             </div>
       
                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                              <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" ng-model="entity.email">
+                              <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" ng-model="entity.email" maxlength="35">
                               <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                             </div>
       
@@ -293,11 +285,17 @@
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                             </div>
 
-                              <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                  <input type="text" class="form-control" id="inputSuccess3" placeholder="Password" ng-model="entity.passwordDecrypt">
-                                  <span class="fa fa-key form-control-feedback right" aria-hidden="true"></span>
-                                </div>
-      
+                                <div>
+                                  <div class="col-md-5 col-sm-5 col-xs-10">
+                                      <input id="password" type="password" class="form-control has-feedback-left" id="txtPass" placeholder="Password" ng-model="entity.passwordDecrypt" maxlength="15">
+                                      <span class="mdi mdi-key form-control-feedback left" aria-hidden="true"></span>
+                                  </div>
+                                      <span>
+                                              <button id= "show_password" class="btn btn-secondary btn-sm" type="button">
+                                              <span class="mdi mdi-eye"></span>
+                                      </button>
+                                      </span>
+                                  </div> 
                           </form>
                         </div>
                       </div>
